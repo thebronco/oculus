@@ -1,0 +1,9 @@
+{
+    "name": "oculus-lambdas",
+    "private": true,
+    "type": "module",
+    "dependencies": {
+        "aws-sdk": "^2.1616.0",
+        "pg": "^8.16.3"
+    }
+}

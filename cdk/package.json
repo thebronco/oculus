@@ -1,0 +1,23 @@
+{
+  "name": "oculus-cdk",
+  "private": true,
+  "scripts": {
+    "build": "tsc",
+    "cdk": "cdk",
+    "deploy": "npm run build && cdk deploy"
+  },
+  "dependencies": {
+    "@aws-sdk/client-rds": "^3.874.0",
+    "@aws-sdk/client-secrets-manager": "^3.873.0",
+    "aws-cdk-lib": "^2.151.0",
+    "aws-sdk": "^2.1692.0",
+    "constructs": "^10.3.0",
+    "pg": "^8.16.3"
+  },
+  "devDependencies": {
+    "@types/node": "^20.11.30",
+    "esbuild": "^0.21.5",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.5.4"
+  }
+}
