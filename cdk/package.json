@@ -4,15 +4,19 @@
   "scripts": {
     "build": "tsc",
     "cdk": "cdk",
-    "deploy": "npm run build && cdk deploy"
+    "deploy": "npm run build && cdk deploy",
+    "inventory": "ts-node checkawsresources.ts",
+    "deploy-infra": "ts-node scripts/deploy-infra.ts",
+    "deploy-app": "ts-node scripts/deploy-app.ts",
+    "deploy-lambda": "ts-node scripts/deploy-lambda.ts",
+    "delete-infra": "ts-node scripts/delete-infra.ts"
   },
   "dependencies": {
     "@aws-sdk/client-rds": "^3.874.0",
     "@aws-sdk/client-secrets-manager": "^3.873.0",
     "aws-cdk-lib": "^2.151.0",
     "aws-sdk": "^2.1692.0",
-    "constructs": "^10.3.0",
-    "pg": "^8.16.3"
+    "constructs": "^10.3.0"
   },
   "devDependencies": {
     "@types/node": "^20.11.30",

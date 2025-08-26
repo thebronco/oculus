@@ -36,6 +36,6 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const cdk = __importStar(require("aws-cdk-lib"));
 const stack_1 = require("../lib/stack");
 const app = new cdk.App();
-new stack_1.MiniStack(app, 'OculusMiniStack', {
+new stack_1.OculusMiniStack(app, 'OculusMiniStack', {
     env: { account: process.env.CDK_DEFAULT_ACCOUNT, region: process.env.CDK_DEFAULT_REGION }
 });

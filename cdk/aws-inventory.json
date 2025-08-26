@@ -1,0 +1,220 @@
+{
+  "vpcs": [],
+  "subnets": [],
+  "routeTables": [],
+  "networkAcls": [],
+  "natGateways": [],
+  "ec2Instances": [
+    {
+      "AmiLaunchIndex": 0,
+      "ImageId": "ami-00ca32bbc84273381",
+      "InstanceId": "i-079a6a0f54c9837ba",
+      "InstanceType": "t3.micro",
+      "KeyName": "oculus-bastion-key",
+      "LaunchTime": "2025-08-25T19:21:47.000Z",
+      "Monitoring": {
+        "State": "disabled"
+      },
+      "Placement": {
+        "AvailabilityZone": "us-east-1a",
+        "GroupName": "",
+        "Tenancy": "default"
+      },
+      "PrivateDnsName": "",
+      "ProductCodes": [],
+      "PublicDnsName": "",
+      "State": {
+        "Code": 48,
+        "Name": "terminated"
+      },
+      "StateTransitionReason": "User initiated (2025-08-26 12:22:39 GMT)",
+      "Architecture": "x86_64",
+      "BlockDeviceMappings": [],
+      "ClientToken": "f8e2cd8f-c2da-454c-9105-61821340e9f9",
+      "EbsOptimized": true,
+      "EnaSupport": true,
+      "Hypervisor": "xen",
+      "ElasticGpuAssociations": [],
+      "ElasticInferenceAcceleratorAssociations": [],
+      "NetworkInterfaces": [],
+      "RootDeviceName": "/dev/xvda",
+      "RootDeviceType": "ebs",
+      "SecurityGroups": [],
+      "StateReason": {
+        "Code": "Client.UserInitiatedShutdown",
+        "Message": "Client.UserInitiatedShutdown: User initiated shutdown"
+      },
+      "Tags": [
+        {
+          "Key": "Name",
+          "Value": "oculus-bastion-host"
+        }
+      ],
+      "VirtualizationType": "hvm",
+      "CpuOptions": {
+        "CoreCount": 1,
+        "ThreadsPerCore": 2
+      },
+      "CapacityReservationSpecification": {
+        "CapacityReservationPreference": "open"
+      },
+      "HibernationOptions": {
+        "Configured": false
+      },
+      "Licenses": [],
+      "MetadataOptions": {
+        "State": "pending",
+        "HttpTokens": "required",
+        "HttpPutResponseHopLimit": 2,
+        "HttpEndpoint": "enabled",
+        "HttpProtocolIpv6": "disabled",
+        "InstanceMetadataTags": "disabled"
+      },
+      "EnclaveOptions": {
+        "Enabled": false
+      },
+      "BootMode": "uefi-preferred",
+      "PlatformDetails": "Linux/UNIX",
+      "UsageOperation": "RunInstances",
+      "UsageOperationUpdateTime": "2025-08-25T19:21:47.000Z",
+      "MaintenanceOptions": {
+        "AutoRecovery": "default"
+      },
+      "CurrentInstanceBootMode": "uefi"
+    }
+  ],
+  "rdsInstances": [],
+  "rdsProxies": [],
+  "lambdaFunctions": [],
+  "apiGateways": [],
+  "secrets": [
+    {
+      "ARN": "arn:aws:secretsmanager:us-east-1:512285571086:secret:security-survey-db-secret-w1So0s",
+      "Name": "security-survey-db-secret",
+      "Description": "Database credentials for security survey application",
+      "LastChangedDate": "2025-05-14T20:56:32.502Z",
+      "Tags": [],
+      "SecretVersionsToStages": {
+        "c3c6c8b6-388e-46ab-9c71-734280a7d3dd": [
+          "AWSCURRENT"
+        ]
+      },
+      "CreatedDate": "2025-05-14T20:56:32.292Z"
+    }
+  ],
+  "s3Buckets": [
+    {
+      "Name": "oculusministack-oculussitebucketdebfbe1e-q4uwii1y2qua",
+      "CreationDate": "2025-08-23T19:52:18.000Z"
+    }
+  ],
+  "cloudFrontDistributions": [
+    {
+      "Id": "E2DEVCKFTV0Y1P",
+      "ARN": "arn:aws:cloudfront::512285571086:distribution/E2DEVCKFTV0Y1P",
+      "Status": "Deployed",
+      "LastModifiedTime": "2025-08-23T19:52:32.134Z",
+      "DomainName": "d2igt02cacwstq.cloudfront.net",
+      "Aliases": {
+        "Quantity": 0,
+        "Items": []
+      },
+      "Origins": {
+        "Quantity": 1,
+        "Items": [
+          {
+            "Id": "OculusMiniStackoculuscfdistOrigin1F457D469",
+            "DomainName": "oculusministack-oculussitebucketdebfbe1e-q4uwii1y2qua.s3.us-east-1.amazonaws.com",
+            "OriginPath": "",
+            "CustomHeaders": {
+              "Quantity": 0,
+              "Items": []
+            },
+            "S3OriginConfig": {
+              "OriginAccessIdentity": "origin-access-identity/cloudfront/E4W96W7IDFM7U"
+            },
+            "ConnectionAttempts": 3,
+            "ConnectionTimeout": 10,
+            "OriginShield": {
+              "Enabled": false
+            },
+            "OriginAccessControlId": ""
+          }
+        ]
+      },
+      "OriginGroups": {
+        "Quantity": 0,
+        "Items": []
+      },
+      "DefaultCacheBehavior": {
+        "TargetOriginId": "OculusMiniStackoculuscfdistOrigin1F457D469",
+        "TrustedSigners": {
+          "Enabled": false,
+          "Quantity": 0,
+          "Items": []
+        },
+        "TrustedKeyGroups": {
+          "Enabled": false,
+          "Quantity": 0,
+          "Items": []
+        },
+        "ViewerProtocolPolicy": "redirect-to-https",
+        "AllowedMethods": {
+          "Quantity": 2,
+          "Items": [
+            "HEAD",
+            "GET"
+          ],
+          "CachedMethods": {
+            "Quantity": 2,
+            "Items": [
+              "HEAD",
+              "GET"
+            ]
+          }
+        },
+        "SmoothStreaming": false,
+        "Compress": true,
+        "LambdaFunctionAssociations": {
+          "Quantity": 0,
+          "Items": []
+        },
+        "FunctionAssociations": {
+          "Quantity": 0,
+          "Items": []
+        },
+        "FieldLevelEncryptionId": "",
+        "CachePolicyId": "658327ea-f89d-4fab-a63d-7e88639e58f6"
+      },
+      "CacheBehaviors": {
+        "Quantity": 0,
+        "Items": []
+      },
+      "CustomErrorResponses": {
+        "Quantity": 0,
+        "Items": []
+      },
+      "Comment": "",
+      "PriceClass": "PriceClass_All",
+      "Enabled": true,
+      "ViewerCertificate": {
+        "CloudFrontDefaultCertificate": true,
+        "SSLSupportMethod": "vip",
+        "MinimumProtocolVersion": "TLSv1",
+        "CertificateSource": "cloudfront"
+      },
+      "Restrictions": {
+        "GeoRestriction": {
+          "RestrictionType": "none",
+          "Quantity": 0,
+          "Items": []
+        }
+      },
+      "WebACLId": "",
+      "HttpVersion": "HTTP2",
+      "IsIPV6Enabled": true,
+      "AliasICPRecordals": [],
+      "Staging": false
+    }
+  ]
+}

@@ -1,0 +1,15 @@
+mainly for bastion access and postgres
+
+
+psql -h oculuspgproxy.proxy-cmto6kcyw96u.us-east-1.rds.amazonaws.com -U postgres -d postgres (connect to the database)
+
+aws secretsmanager get-secret-value --secret-id oculus_db_secret --region us-east-1 (get the password)
+
+sh -i "C:\bastion_pem\oculus-bastion-key.pem" ec2-user@18.234.139.58 "psql -h oculuspgproxy.proxy-cmto6kcyw96u.us-east-1.rds.amazonaws.com -U postgres -d postgres -c 'SELECT version();'"  (connect to the database from the bastion)
+
+
+
+
+
+
+
