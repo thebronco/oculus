@@ -1,8 +1,8 @@
 /**
- * CDK Entry Point - Oculus Mini Stack
+ * CDK Entry Point - Oculus Dev Stack
  * 
  * This file serves as the main entry point for the CDK application.
- * It instantiates the OculusMiniStack and deploys it to the AWS account
+ * It instantiates the OculusDevStack and deploys it to the AWS account
  * specified in the CDK_DEFAULT_ACCOUNT environment variable and the region
  * specified in CDK_DEFAULT_REGION environment variable.
  * 
@@ -16,9 +16,9 @@
  */
 
 import * as cdk from 'aws-cdk-lib';
-import { OculusMiniStack } from '../lib/stack';
+import { OculusDevStack } from '../lib/stack';
 
 const app = new cdk.App();
-new OculusMiniStack(app, 'OculusMiniStack', {
+new OculusDevStack(app, 'OculusDevStack', {
   env: { account: process.env.CDK_DEFAULT_ACCOUNT, region: process.env.CDK_DEFAULT_REGION }
 });

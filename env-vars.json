@@ -1,0 +1,8 @@
+{
+  "Variables": {
+    "PGHOST": "10.0.88.227",
+    "PGPORT": "5432",
+    "PGDATABASE": "oculusdb",
+    "DB_SECRET_ARN": "arn:aws:secretsmanager:us-east-1:512285571086:secret:OculusDev_db_secret-Dsfl6x"
+  }
+}

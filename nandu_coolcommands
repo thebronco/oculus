@@ -1,13 +1,53 @@
 mainly for bastion access and postgres
 
+after bastion is created, with public ip and sg which allows ssh from my ip address and part of public subnet.
+
+
+ssh -i "C:\bastion_pem\oculus-bastion-key.pem" ec2-user@44.193.201.195
+
+
+sudo dnf install -y postgresql15
+
+rdsproxy endpoint: oculusdev-pgproxy.proxy-cmto6kcyw96u.us-east-1.rds.amazonaws.com
+
+psql -h oculusdev-pgproxy.proxy-cmto6kcyw96u.us-east-1.rds.amazonaws.com -U postgres -d postgres 
+
+
+now test rds proxy connection from bastion. 
+need rds proxy sg to allow ssh from bastion and 
+the rds proxy endpoint.
+
+RDS Proxy SG → must allow inbound 5432 from Bastion SG.
+RDS Instance SG → must allow inbound 5432 from the Proxy SG.
+
+
 
 psql -h oculuspgproxy.proxy-cmto6kcyw96u.us-east-1.rds.amazonaws.com -U postgres -d postgres (connect to the database)
 
-aws secretsmanager get-secret-value --secret-id oculus_db_secret --region us-east-1 (get the password)
-
-sh -i "C:\bastion_pem\oculus-bastion-key.pem" ec2-user@18.234.139.58 "psql -h oculuspgproxy.proxy-cmto6kcyw96u.us-east-1.rds.amazonaws.com -U postgres -d postgres -c 'SELECT version();'"  (connect to the database from the bastion)
 
 
+
+ssh -i "C:\bastion_pem\oculus-bastion-key.pem" ec2-user@44.193.201.195 "psql -h oculuspgproxy.proxy-cmto6kcyw96u.us-east-1.rds.amazonaws.com -U postgres -d postgres -c 'SELECT version();'"  (connect to the database from the bastion)
+
+
+psql -h oculuspgproxy.proxy-cmto6kcyw96u.us-east-1.rds.amazonaws.com -U postgres -d postgres (connect to the database)
+
+#update the secret id based on the deployment
+aws secretsmanager get-secret-value --secret-id OculusDev_db_secret --region us-east-1 (get the password)
+
+
+
+now tunnel open for pgadmin to connect to the database.
+
+ssh -i "C:\bastion_pem\oculus-bastion-key.pem" -L 5433:oculuspgproxy.proxy-cmto6kcyw96u.us-east-1.rds.amazonaws.com:5432 ec2-user@44.193.201.195 
+#ssh -i C:\path\to\your-key.pem -L 5433:<rds-proxy-endpoint>:5432 ec2-user@<bastion-public-ip>
+
+
+
+
+
+
+npm run deploy-infra (deploy the infrastructure) one BEAST of script.
 
 
 

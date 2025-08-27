@@ -204,8 +204,8 @@ async function main() {
   console.log("\n🔍 Checking CDK stack status...");
   try {
     const stackStatus = shCap("npx cdk list", { cwd: cdkDir });
-    if (stackStatus.includes('OculusMiniStack')) {
-      console.log("✅ CDK stack 'OculusMiniStack' found");
+             if (stackStatus.includes('OculusDevStack')) {
+           console.log("✅ CDK stack 'OculusDevStack' found");
     } else {
       console.log("⚠️  No CDK stack found - resources may have been deleted manually");
     }

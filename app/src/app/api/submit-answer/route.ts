@@ -12,15 +12,8 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    // Get API Gateway URL from environment variable
-    const apiGatewayUrl = process.env.API_GATEWAY_URL;
-    
-    if (!apiGatewayUrl) {
-      return NextResponse.json(
-        { error: 'API Gateway URL not configured' },
-        { status: 500 }
-      );
-    }
+    // Use the correct API Gateway URL directly
+    const apiGatewayUrl = 'https://gkvybwktj6.execute-api.us-east-1.amazonaws.com/prod';
 
     // Submit answer to your Lambda function
     const response = await fetch(`${apiGatewayUrl}/survey/submit`, {

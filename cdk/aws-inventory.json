@@ -1,120 +1,1737 @@
 {
-  "vpcs": [],
-  "subnets": [],
-  "routeTables": [],
-  "networkAcls": [],
-  "natGateways": [],
-  "ec2Instances": [
+  "vpcs": [
     {
-      "AmiLaunchIndex": 0,
-      "ImageId": "ami-00ca32bbc84273381",
-      "InstanceId": "i-079a6a0f54c9837ba",
-      "InstanceType": "t3.micro",
-      "KeyName": "oculus-bastion-key",
-      "LaunchTime": "2025-08-25T19:21:47.000Z",
-      "Monitoring": {
-        "State": "disabled"
-      },
-      "Placement": {
-        "AvailabilityZone": "us-east-1a",
-        "GroupName": "",
-        "Tenancy": "default"
-      },
-      "PrivateDnsName": "",
-      "ProductCodes": [],
-      "PublicDnsName": "",
-      "State": {
-        "Code": 48,
-        "Name": "terminated"
-      },
-      "StateTransitionReason": "User initiated (2025-08-26 12:22:39 GMT)",
-      "Architecture": "x86_64",
-      "BlockDeviceMappings": [],
-      "ClientToken": "f8e2cd8f-c2da-454c-9105-61821340e9f9",
-      "EbsOptimized": true,
-      "EnaSupport": true,
-      "Hypervisor": "xen",
-      "ElasticGpuAssociations": [],
-      "ElasticInferenceAcceleratorAssociations": [],
-      "NetworkInterfaces": [],
-      "RootDeviceName": "/dev/xvda",
-      "RootDeviceType": "ebs",
-      "SecurityGroups": [],
-      "StateReason": {
-        "Code": "Client.UserInitiatedShutdown",
-        "Message": "Client.UserInitiatedShutdown: User initiated shutdown"
-      },
+      "CidrBlock": "10.0.0.0/16",
+      "DhcpOptionsId": "dopt-0aa6b1e144da1eafd",
+      "State": "available",
+      "VpcId": "vpc-04c88b22754bc0c02",
+      "OwnerId": "512285571086",
+      "InstanceTenancy": "default",
+      "Ipv6CidrBlockAssociationSet": [],
+      "CidrBlockAssociationSet": [
+        {
+          "AssociationId": "vpc-cidr-assoc-054c13b007fd5a833",
+          "CidrBlock": "10.0.0.0/16",
+          "CidrBlockState": {
+            "State": "associated"
+          }
+        }
+      ],
+      "IsDefault": false,
       "Tags": [
         {
           "Key": "Name",
-          "Value": "oculus-bastion-host"
+          "Value": "OculusDev_vpc"
+        },
+        {
+          "Key": "project",
+          "Value": "oculus"
+        },
+        {
+          "Key": "aws:cloudformation:stack-name",
+          "Value": "OculusDevStack"
+        },
+        {
+          "Key": "aws:cloudformation:logical-id",
+          "Value": "OculusDevvpc5817FA4E"
+        },
+        {
+          "Key": "aws:cloudformation:stack-id",
+          "Value": "arn:aws:cloudformation:us-east-1:512285571086:stack/OculusDevStack/ca5bc700-82b1-11f0-824c-0e34acf8beff"
+        },
+        {
+          "Key": "stack",
+          "Value": "OculusDevStack"
+        },
+        {
+          "Key": "environment",
+          "Value": "dev"
         }
-      ],
-      "VirtualizationType": "hvm",
-      "CpuOptions": {
-        "CoreCount": 1,
-        "ThreadsPerCore": 2
-      },
-      "CapacityReservationSpecification": {
-        "CapacityReservationPreference": "open"
-      },
-      "HibernationOptions": {
-        "Configured": false
-      },
-      "Licenses": [],
-      "MetadataOptions": {
-        "State": "pending",
-        "HttpTokens": "required",
-        "HttpPutResponseHopLimit": 2,
-        "HttpEndpoint": "enabled",
-        "HttpProtocolIpv6": "disabled",
-        "InstanceMetadataTags": "disabled"
-      },
-      "EnclaveOptions": {
-        "Enabled": false
-      },
-      "BootMode": "uefi-preferred",
-      "PlatformDetails": "Linux/UNIX",
-      "UsageOperation": "RunInstances",
-      "UsageOperationUpdateTime": "2025-08-25T19:21:47.000Z",
-      "MaintenanceOptions": {
-        "AutoRecovery": "default"
-      },
-      "CurrentInstanceBootMode": "uefi"
+      ]
     }
   ],
-  "rdsInstances": [],
-  "rdsProxies": [],
-  "lambdaFunctions": [],
-  "apiGateways": [],
+  "subnets": [
+    {
+      "AvailabilityZone": "us-east-1c",
+      "AvailabilityZoneId": "use1-az4",
+      "AvailableIpAddressCount": 4091,
+      "CidrBlock": "10.0.32.0/20",
+      "DefaultForAz": false,
+      "MapPublicIpOnLaunch": true,
+      "MapCustomerOwnedIpOnLaunch": false,
+      "State": "available",
+      "SubnetId": "subnet-08a8ebd0e873f1d0d",
+      "VpcId": "vpc-04c88b22754bc0c02",
+      "OwnerId": "512285571086",
+      "AssignIpv6AddressOnCreation": false,
+      "Ipv6CidrBlockAssociationSet": [],
+      "Tags": [
+        {
+          "Key": "Name",
+          "Value": "OculusDevStack/OculusDev_vpc/OculusDev_publicSubnet3"
+        },
+        {
+          "Key": "aws-cdk:subnet-type",
+          "Value": "Public"
+        },
+        {
+          "Key": "stack",
+          "Value": "OculusDevStack"
+        },
+        {
+          "Key": "project",
+          "Value": "oculus"
+        },
+        {
+          "Key": "aws:cloudformation:stack-name",
+          "Value": "OculusDevStack"
+        },
+        {
+          "Key": "environment",
+          "Value": "dev"
+        },
+        {
+          "Key": "aws:cloudformation:stack-id",
+          "Value": "arn:aws:cloudformation:us-east-1:512285571086:stack/OculusDevStack/ca5bc700-82b1-11f0-824c-0e34acf8beff"
+        },
+        {
+          "Key": "aws:cloudformation:logical-id",
+          "Value": "OculusDevvpcOculusDevpublicSubnet3Subnet7E2CAE40"
+        },
+        {
+          "Key": "aws-cdk:subnet-name",
+          "Value": "OculusDev_public"
+        }
+      ],
+      "SubnetArn": "arn:aws:ec2:us-east-1:512285571086:subnet/subnet-08a8ebd0e873f1d0d",
+      "EnableDns64": false,
+      "Ipv6Native": false,
+      "PrivateDnsNameOptionsOnLaunch": {
+        "HostnameType": "ip-name",
+        "EnableResourceNameDnsARecord": false,
+        "EnableResourceNameDnsAAAARecord": false
+      }
+    },
+    {
+      "AvailabilityZone": "us-east-1b",
+      "AvailabilityZoneId": "use1-az2",
+      "AvailableIpAddressCount": 4089,
+      "CidrBlock": "10.0.112.0/20",
+      "DefaultForAz": false,
+      "MapPublicIpOnLaunch": false,
+      "MapCustomerOwnedIpOnLaunch": false,
+      "State": "available",
+      "SubnetId": "subnet-094cd58e96312dc3d",
+      "VpcId": "vpc-04c88b22754bc0c02",
+      "OwnerId": "512285571086",
+      "AssignIpv6AddressOnCreation": false,
+      "Ipv6CidrBlockAssociationSet": [],
+      "Tags": [
+        {
+          "Key": "aws:cloudformation:logical-id",
+          "Value": "OculusDevvpcOculusDevdbSubnet2Subnet32EB19C8"
+        },
+        {
+          "Key": "aws-cdk:subnet-name",
+          "Value": "OculusDev_db"
+        },
+        {
+          "Key": "aws:cloudformation:stack-id",
+          "Value": "arn:aws:cloudformation:us-east-1:512285571086:stack/OculusDevStack/ca5bc700-82b1-11f0-824c-0e34acf8beff"
+        },
+        {
+          "Key": "stack",
+          "Value": "OculusDevStack"
+        },
+        {
+          "Key": "environment",
+          "Value": "dev"
+        },
+        {
+          "Key": "aws-cdk:subnet-type",
+          "Value": "Isolated"
+        },
+        {
+          "Key": "project",
+          "Value": "oculus"
+        },
+        {
+          "Key": "Name",
+          "Value": "OculusDevStack/OculusDev_vpc/OculusDev_dbSubnet2"
+        },
+        {
+          "Key": "aws:cloudformation:stack-name",
+          "Value": "OculusDevStack"
+        }
+      ],
+      "SubnetArn": "arn:aws:ec2:us-east-1:512285571086:subnet/subnet-094cd58e96312dc3d",
+      "EnableDns64": false,
+      "Ipv6Native": false,
+      "PrivateDnsNameOptionsOnLaunch": {
+        "HostnameType": "ip-name",
+        "EnableResourceNameDnsARecord": false,
+        "EnableResourceNameDnsAAAARecord": false
+      }
+    },
+    {
+      "AvailabilityZone": "us-east-1a",
+      "AvailabilityZoneId": "use1-az1",
+      "AvailableIpAddressCount": 4089,
+      "CidrBlock": "10.0.48.0/20",
+      "DefaultForAz": false,
+      "MapPublicIpOnLaunch": false,
+      "MapCustomerOwnedIpOnLaunch": false,
+      "State": "available",
+      "SubnetId": "subnet-0cfe9c490bb509306",
+      "VpcId": "vpc-04c88b22754bc0c02",
+      "OwnerId": "512285571086",
+      "AssignIpv6AddressOnCreation": false,
+      "Ipv6CidrBlockAssociationSet": [],
+      "Tags": [
+        {
+          "Key": "Name",
+          "Value": "OculusDevStack/OculusDev_vpc/OculusDev_private_isolatedSubnet1"
+        },
+        {
+          "Key": "aws:cloudformation:stack-name",
+          "Value": "OculusDevStack"
+        },
+        {
+          "Key": "environment",
+          "Value": "dev"
+        },
+        {
+          "Key": "aws-cdk:subnet-name",
+          "Value": "OculusDev_private_isolated"
+        },
+        {
+          "Key": "aws:cloudformation:stack-id",
+          "Value": "arn:aws:cloudformation:us-east-1:512285571086:stack/OculusDevStack/ca5bc700-82b1-11f0-824c-0e34acf8beff"
+        },
+        {
+          "Key": "stack",
+          "Value": "OculusDevStack"
+        },
+        {
+          "Key": "project",
+          "Value": "oculus"
+        },
+        {
+          "Key": "aws-cdk:subnet-type",
+          "Value": "Isolated"
+        },
+        {
+          "Key": "aws:cloudformation:logical-id",
+          "Value": "OculusDevvpcOculusDevprivateisolatedSubnet1Subnet38632792"
+        }
+      ],
+      "SubnetArn": "arn:aws:ec2:us-east-1:512285571086:subnet/subnet-0cfe9c490bb509306",
+      "EnableDns64": false,
+      "Ipv6Native": false,
+      "PrivateDnsNameOptionsOnLaunch": {
+        "HostnameType": "ip-name",
+        "EnableResourceNameDnsARecord": false,
+        "EnableResourceNameDnsAAAARecord": false
+      }
+    },
+    {
+      "AvailabilityZone": "us-east-1b",
+      "AvailabilityZoneId": "use1-az2",
+      "AvailableIpAddressCount": 4091,
+      "CidrBlock": "10.0.16.0/20",
+      "DefaultForAz": false,
+      "MapPublicIpOnLaunch": true,
+      "MapCustomerOwnedIpOnLaunch": false,
+      "State": "available",
+      "SubnetId": "subnet-07c6bee8cd8ea148f",
+      "VpcId": "vpc-04c88b22754bc0c02",
+      "OwnerId": "512285571086",
+      "AssignIpv6AddressOnCreation": false,
+      "Ipv6CidrBlockAssociationSet": [],
+      "Tags": [
+        {
+          "Key": "project",
+          "Value": "oculus"
+        },
+        {
+          "Key": "aws-cdk:subnet-name",
+          "Value": "OculusDev_public"
+        },
+        {
+          "Key": "environment",
+          "Value": "dev"
+        },
+        {
+          "Key": "aws-cdk:subnet-type",
+          "Value": "Public"
+        },
+        {
+          "Key": "aws:cloudformation:stack-name",
+          "Value": "OculusDevStack"
+        },
+        {
+          "Key": "stack",
+          "Value": "OculusDevStack"
+        },
+        {
+          "Key": "aws:cloudformation:logical-id",
+          "Value": "OculusDevvpcOculusDevpublicSubnet2Subnet14CC8499"
+        },
+        {
+          "Key": "Name",
+          "Value": "OculusDevStack/OculusDev_vpc/OculusDev_publicSubnet2"
+        },
+        {
+          "Key": "aws:cloudformation:stack-id",
+          "Value": "arn:aws:cloudformation:us-east-1:512285571086:stack/OculusDevStack/ca5bc700-82b1-11f0-824c-0e34acf8beff"
+        }
+      ],
+      "SubnetArn": "arn:aws:ec2:us-east-1:512285571086:subnet/subnet-07c6bee8cd8ea148f",
+      "EnableDns64": false,
+      "Ipv6Native": false,
+      "PrivateDnsNameOptionsOnLaunch": {
+        "HostnameType": "ip-name",
+        "EnableResourceNameDnsARecord": false,
+        "EnableResourceNameDnsAAAARecord": false
+      }
+    },
+    {
+      "AvailabilityZone": "us-east-1a",
+      "AvailabilityZoneId": "use1-az1",
+      "AvailableIpAddressCount": 4089,
+      "CidrBlock": "10.0.96.0/20",
+      "DefaultForAz": false,
+      "MapPublicIpOnLaunch": false,
+      "MapCustomerOwnedIpOnLaunch": false,
+      "State": "available",
+      "SubnetId": "subnet-0c217543cfc719fd9",
+      "VpcId": "vpc-04c88b22754bc0c02",
+      "OwnerId": "512285571086",
+      "AssignIpv6AddressOnCreation": false,
+      "Ipv6CidrBlockAssociationSet": [],
+      "Tags": [
+        {
+          "Key": "aws:cloudformation:logical-id",
+          "Value": "OculusDevvpcOculusDevdbSubnet1SubnetBAC3F8EE"
+        },
+        {
+          "Key": "project",
+          "Value": "oculus"
+        },
+        {
+          "Key": "aws:cloudformation:stack-id",
+          "Value": "arn:aws:cloudformation:us-east-1:512285571086:stack/OculusDevStack/ca5bc700-82b1-11f0-824c-0e34acf8beff"
+        },
+        {
+          "Key": "Name",
+          "Value": "OculusDevStack/OculusDev_vpc/OculusDev_dbSubnet1"
+        },
+        {
+          "Key": "aws-cdk:subnet-name",
+          "Value": "OculusDev_db"
+        },
+        {
+          "Key": "environment",
+          "Value": "dev"
+        },
+        {
+          "Key": "stack",
+          "Value": "OculusDevStack"
+        },
+        {
+          "Key": "aws:cloudformation:stack-name",
+          "Value": "OculusDevStack"
+        },
+        {
+          "Key": "aws-cdk:subnet-type",
+          "Value": "Isolated"
+        }
+      ],
+      "SubnetArn": "arn:aws:ec2:us-east-1:512285571086:subnet/subnet-0c217543cfc719fd9",
+      "EnableDns64": false,
+      "Ipv6Native": false,
+      "PrivateDnsNameOptionsOnLaunch": {
+        "HostnameType": "ip-name",
+        "EnableResourceNameDnsARecord": false,
+        "EnableResourceNameDnsAAAARecord": false
+      }
+    },
+    {
+      "AvailabilityZone": "us-east-1a",
+      "AvailabilityZoneId": "use1-az1",
+      "AvailableIpAddressCount": 4091,
+      "CidrBlock": "10.0.0.0/20",
+      "DefaultForAz": false,
+      "MapPublicIpOnLaunch": true,
+      "MapCustomerOwnedIpOnLaunch": false,
+      "State": "available",
+      "SubnetId": "subnet-0cd8f4afd0a3ea652",
+      "VpcId": "vpc-04c88b22754bc0c02",
+      "OwnerId": "512285571086",
+      "AssignIpv6AddressOnCreation": false,
+      "Ipv6CidrBlockAssociationSet": [],
+      "Tags": [
+        {
+          "Key": "Name",
+          "Value": "OculusDevStack/OculusDev_vpc/OculusDev_publicSubnet1"
+        },
+        {
+          "Key": "aws:cloudformation:stack-name",
+          "Value": "OculusDevStack"
+        },
+        {
+          "Key": "aws:cloudformation:logical-id",
+          "Value": "OculusDevvpcOculusDevpublicSubnet1SubnetA95C822C"
+        },
+        {
+          "Key": "aws:cloudformation:stack-id",
+          "Value": "arn:aws:cloudformation:us-east-1:512285571086:stack/OculusDevStack/ca5bc700-82b1-11f0-824c-0e34acf8beff"
+        },
+        {
+          "Key": "stack",
+          "Value": "OculusDevStack"
+        },
+        {
+          "Key": "aws-cdk:subnet-type",
+          "Value": "Public"
+        },
+        {
+          "Key": "environment",
+          "Value": "dev"
+        },
+        {
+          "Key": "project",
+          "Value": "oculus"
+        },
+        {
+          "Key": "aws-cdk:subnet-name",
+          "Value": "OculusDev_public"
+        }
+      ],
+      "SubnetArn": "arn:aws:ec2:us-east-1:512285571086:subnet/subnet-0cd8f4afd0a3ea652",
+      "EnableDns64": false,
+      "Ipv6Native": false,
+      "PrivateDnsNameOptionsOnLaunch": {
+        "HostnameType": "ip-name",
+        "EnableResourceNameDnsARecord": false,
+        "EnableResourceNameDnsAAAARecord": false
+      }
+    },
+    {
+      "AvailabilityZone": "us-east-1b",
+      "AvailabilityZoneId": "use1-az2",
+      "AvailableIpAddressCount": 4089,
+      "CidrBlock": "10.0.64.0/20",
+      "DefaultForAz": false,
+      "MapPublicIpOnLaunch": false,
+      "MapCustomerOwnedIpOnLaunch": false,
+      "State": "available",
+      "SubnetId": "subnet-07fb395540cf9ac7a",
+      "VpcId": "vpc-04c88b22754bc0c02",
+      "OwnerId": "512285571086",
+      "AssignIpv6AddressOnCreation": false,
+      "Ipv6CidrBlockAssociationSet": [],
+      "Tags": [
+        {
+          "Key": "environment",
+          "Value": "dev"
+        },
+        {
+          "Key": "stack",
+          "Value": "OculusDevStack"
+        },
+        {
+          "Key": "aws-cdk:subnet-name",
+          "Value": "OculusDev_private_isolated"
+        },
+        {
+          "Key": "project",
+          "Value": "oculus"
+        },
+        {
+          "Key": "aws:cloudformation:stack-name",
+          "Value": "OculusDevStack"
+        },
+        {
+          "Key": "aws-cdk:subnet-type",
+          "Value": "Isolated"
+        },
+        {
+          "Key": "Name",
+          "Value": "OculusDevStack/OculusDev_vpc/OculusDev_private_isolatedSubnet2"
+        },
+        {
+          "Key": "aws:cloudformation:stack-id",
+          "Value": "arn:aws:cloudformation:us-east-1:512285571086:stack/OculusDevStack/ca5bc700-82b1-11f0-824c-0e34acf8beff"
+        },
+        {
+          "Key": "aws:cloudformation:logical-id",
+          "Value": "OculusDevvpcOculusDevprivateisolatedSubnet2SubnetDBCA88AF"
+        }
+      ],
+      "SubnetArn": "arn:aws:ec2:us-east-1:512285571086:subnet/subnet-07fb395540cf9ac7a",
+      "EnableDns64": false,
+      "Ipv6Native": false,
+      "PrivateDnsNameOptionsOnLaunch": {
+        "HostnameType": "ip-name",
+        "EnableResourceNameDnsARecord": false,
+        "EnableResourceNameDnsAAAARecord": false
+      }
+    },
+    {
+      "AvailabilityZone": "us-east-1c",
+      "AvailabilityZoneId": "use1-az4",
+      "AvailableIpAddressCount": 4089,
+      "CidrBlock": "10.0.128.0/20",
+      "DefaultForAz": false,
+      "MapPublicIpOnLaunch": false,
+      "MapCustomerOwnedIpOnLaunch": false,
+      "State": "available",
+      "SubnetId": "subnet-00259a34572076a41",
+      "VpcId": "vpc-04c88b22754bc0c02",
+      "OwnerId": "512285571086",
+      "AssignIpv6AddressOnCreation": false,
+      "Ipv6CidrBlockAssociationSet": [],
+      "Tags": [
+        {
+          "Key": "aws:cloudformation:stack-id",
+          "Value": "arn:aws:cloudformation:us-east-1:512285571086:stack/OculusDevStack/ca5bc700-82b1-11f0-824c-0e34acf8beff"
+        },
+        {
+          "Key": "aws:cloudformation:logical-id",
+          "Value": "OculusDevvpcOculusDevdbSubnet3SubnetA9A22090"
+        },
+        {
+          "Key": "Name",
+          "Value": "OculusDevStack/OculusDev_vpc/OculusDev_dbSubnet3"
+        },
+        {
+          "Key": "aws-cdk:subnet-type",
+          "Value": "Isolated"
+        },
+        {
+          "Key": "aws:cloudformation:stack-name",
+          "Value": "OculusDevStack"
+        },
+        {
+          "Key": "project",
+          "Value": "oculus"
+        },
+        {
+          "Key": "aws-cdk:subnet-name",
+          "Value": "OculusDev_db"
+        },
+        {
+          "Key": "stack",
+          "Value": "OculusDevStack"
+        },
+        {
+          "Key": "environment",
+          "Value": "dev"
+        }
+      ],
+      "SubnetArn": "arn:aws:ec2:us-east-1:512285571086:subnet/subnet-00259a34572076a41",
+      "EnableDns64": false,
+      "Ipv6Native": false,
+      "PrivateDnsNameOptionsOnLaunch": {
+        "HostnameType": "ip-name",
+        "EnableResourceNameDnsARecord": false,
+        "EnableResourceNameDnsAAAARecord": false
+      }
+    },
+    {
+      "AvailabilityZone": "us-east-1c",
+      "AvailabilityZoneId": "use1-az4",
+      "AvailableIpAddressCount": 4089,
+      "CidrBlock": "10.0.80.0/20",
+      "DefaultForAz": false,
+      "MapPublicIpOnLaunch": false,
+      "MapCustomerOwnedIpOnLaunch": false,
+      "State": "available",
+      "SubnetId": "subnet-0152390c4549b3b99",
+      "VpcId": "vpc-04c88b22754bc0c02",
+      "OwnerId": "512285571086",
+      "AssignIpv6AddressOnCreation": false,
+      "Ipv6CidrBlockAssociationSet": [],
+      "Tags": [
+        {
+          "Key": "aws:cloudformation:stack-name",
+          "Value": "OculusDevStack"
+        },
+        {
+          "Key": "aws-cdk:subnet-type",
+          "Value": "Isolated"
+        },
+        {
+          "Key": "Name",
+          "Value": "OculusDevStack/OculusDev_vpc/OculusDev_private_isolatedSubnet3"
+        },
+        {
+          "Key": "aws:cloudformation:stack-id",
+          "Value": "arn:aws:cloudformation:us-east-1:512285571086:stack/OculusDevStack/ca5bc700-82b1-11f0-824c-0e34acf8beff"
+        },
+        {
+          "Key": "environment",
+          "Value": "dev"
+        },
+        {
+          "Key": "stack",
+          "Value": "OculusDevStack"
+        },
+        {
+          "Key": "project",
+          "Value": "oculus"
+        },
+        {
+          "Key": "aws-cdk:subnet-name",
+          "Value": "OculusDev_private_isolated"
+        },
+        {
+          "Key": "aws:cloudformation:logical-id",
+          "Value": "OculusDevvpcOculusDevprivateisolatedSubnet3SubnetE2A98409"
+        }
+      ],
+      "SubnetArn": "arn:aws:ec2:us-east-1:512285571086:subnet/subnet-0152390c4549b3b99",
+      "EnableDns64": false,
+      "Ipv6Native": false,
+      "PrivateDnsNameOptionsOnLaunch": {
+        "HostnameType": "ip-name",
+        "EnableResourceNameDnsARecord": false,
+        "EnableResourceNameDnsAAAARecord": false
+      }
+    }
+  ],
+  "routeTables": [
+    {
+      "Associations": [
+        {
+          "Main": false,
+          "RouteTableAssociationId": "rtbassoc-0ae294eb50e4fa975",
+          "RouteTableId": "rtb-0b21e31209ceb13fe",
+          "SubnetId": "subnet-0cfe9c490bb509306",
+          "AssociationState": {
+            "State": "associated"
+          }
+        }
+      ],
+      "PropagatingVgws": [],
+      "RouteTableId": "rtb-0b21e31209ceb13fe",
+      "Routes": [
+        {
+          "DestinationCidrBlock": "10.0.0.0/16",
+          "GatewayId": "local",
+          "Origin": "CreateRouteTable",
+          "State": "active"
+        }
+      ],
+      "Tags": [
+        {
+          "Key": "aws:cloudformation:stack-name",
+          "Value": "OculusDevStack"
+        },
+        {
+          "Key": "Name",
+          "Value": "OculusDevStack/OculusDev_vpc/OculusDev_private_isolatedSubnet1"
+        },
+        {
+          "Key": "aws:cloudformation:logical-id",
+          "Value": "OculusDevvpcOculusDevprivateisolatedSubnet1RouteTableC2FA9841"
+        },
+        {
+          "Key": "aws:cloudformation:stack-id",
+          "Value": "arn:aws:cloudformation:us-east-1:512285571086:stack/OculusDevStack/ca5bc700-82b1-11f0-824c-0e34acf8beff"
+        },
+        {
+          "Key": "environment",
+          "Value": "dev"
+        },
+        {
+          "Key": "stack",
+          "Value": "OculusDevStack"
+        },
+        {
+          "Key": "project",
+          "Value": "oculus"
+        }
+      ],
+      "VpcId": "vpc-04c88b22754bc0c02",
+      "OwnerId": "512285571086"
+    },
+    {
+      "Associations": [
+        {
+          "Main": false,
+          "RouteTableAssociationId": "rtbassoc-00a7a55119c9cbe8b",
+          "RouteTableId": "rtb-05f3db7bce316ec31",
+          "SubnetId": "subnet-0c217543cfc719fd9",
+          "AssociationState": {
+            "State": "associated"
+          }
+        }
+      ],
+      "PropagatingVgws": [],
+      "RouteTableId": "rtb-05f3db7bce316ec31",
+      "Routes": [
+        {
+          "DestinationCidrBlock": "10.0.0.0/16",
+          "GatewayId": "local",
+          "Origin": "CreateRouteTable",
+          "State": "active"
+        }
+      ],
+      "Tags": [
+        {
+          "Key": "environment",
+          "Value": "dev"
+        },
+        {
+          "Key": "stack",
+          "Value": "OculusDevStack"
+        },
+        {
+          "Key": "Name",
+          "Value": "OculusDevStack/OculusDev_vpc/OculusDev_dbSubnet1"
+        },
+        {
+          "Key": "aws:cloudformation:stack-name",
+          "Value": "OculusDevStack"
+        },
+        {
+          "Key": "project",
+          "Value": "oculus"
+        },
+        {
+          "Key": "aws:cloudformation:logical-id",
+          "Value": "OculusDevvpcOculusDevdbSubnet1RouteTable917CB932"
+        },
+        {
+          "Key": "aws:cloudformation:stack-id",
+          "Value": "arn:aws:cloudformation:us-east-1:512285571086:stack/OculusDevStack/ca5bc700-82b1-11f0-824c-0e34acf8beff"
+        }
+      ],
+      "VpcId": "vpc-04c88b22754bc0c02",
+      "OwnerId": "512285571086"
+    },
+    {
+      "Associations": [
+        {
+          "Main": false,
+          "RouteTableAssociationId": "rtbassoc-09fd4dfb674f87c83",
+          "RouteTableId": "rtb-07a96f8f6dc3033ef",
+          "SubnetId": "subnet-0cd8f4afd0a3ea652",
+          "AssociationState": {
+            "State": "associated"
+          }
+        }
+      ],
+      "PropagatingVgws": [],
+      "RouteTableId": "rtb-07a96f8f6dc3033ef",
+      "Routes": [
+        {
+          "DestinationCidrBlock": "10.0.0.0/16",
+          "GatewayId": "local",
+          "Origin": "CreateRouteTable",
+          "State": "active"
+        },
+        {
+          "DestinationCidrBlock": "0.0.0.0/0",
+          "GatewayId": "igw-00cb7c182292985fd",
+          "Origin": "CreateRoute",
+          "State": "active"
+        }
+      ],
+      "Tags": [
+        {
+          "Key": "Name",
+          "Value": "OculusDevStack/OculusDev_vpc/OculusDev_publicSubnet1"
+        },
+        {
+          "Key": "aws:cloudformation:stack-name",
+          "Value": "OculusDevStack"
+        },
+        {
+          "Key": "project",
+          "Value": "oculus"
+        },
+        {
+          "Key": "environment",
+          "Value": "dev"
+        },
+        {
+          "Key": "aws:cloudformation:logical-id",
+          "Value": "OculusDevvpcOculusDevpublicSubnet1RouteTable887136E3"
+        },
+        {
+          "Key": "stack",
+          "Value": "OculusDevStack"
+        },
+        {
+          "Key": "aws:cloudformation:stack-id",
+          "Value": "arn:aws:cloudformation:us-east-1:512285571086:stack/OculusDevStack/ca5bc700-82b1-11f0-824c-0e34acf8beff"
+        }
+      ],
+      "VpcId": "vpc-04c88b22754bc0c02",
+      "OwnerId": "512285571086"
+    },
+    {
+      "Associations": [
+        {
+          "Main": false,
+          "RouteTableAssociationId": "rtbassoc-0e8b0e9b089707b45",
+          "RouteTableId": "rtb-0643ebb0589f3797a",
+          "SubnetId": "subnet-00259a34572076a41",
+          "AssociationState": {
+            "State": "associated"
+          }
+        }
+      ],
+      "PropagatingVgws": [],
+      "RouteTableId": "rtb-0643ebb0589f3797a",
+      "Routes": [
+        {
+          "DestinationCidrBlock": "10.0.0.0/16",
+          "GatewayId": "local",
+          "Origin": "CreateRouteTable",
+          "State": "active"
+        }
+      ],
+      "Tags": [
+        {
+          "Key": "aws:cloudformation:stack-id",
+          "Value": "arn:aws:cloudformation:us-east-1:512285571086:stack/OculusDevStack/ca5bc700-82b1-11f0-824c-0e34acf8beff"
+        },
+        {
+          "Key": "Name",
+          "Value": "OculusDevStack/OculusDev_vpc/OculusDev_dbSubnet3"
+        },
+        {
+          "Key": "aws:cloudformation:stack-name",
+          "Value": "OculusDevStack"
+        },
+        {
+          "Key": "project",
+          "Value": "oculus"
+        },
+        {
+          "Key": "aws:cloudformation:logical-id",
+          "Value": "OculusDevvpcOculusDevdbSubnet3RouteTable96858718"
+        },
+        {
+          "Key": "environment",
+          "Value": "dev"
+        },
+        {
+          "Key": "stack",
+          "Value": "OculusDevStack"
+        }
+      ],
+      "VpcId": "vpc-04c88b22754bc0c02",
+      "OwnerId": "512285571086"
+    },
+    {
+      "Associations": [
+        {
+          "Main": true,
+          "RouteTableAssociationId": "rtbassoc-0a81c7016fa6a9396",
+          "RouteTableId": "rtb-003c1aa4e1ccde328",
+          "AssociationState": {
+            "State": "associated"
+          }
+        }
+      ],
+      "PropagatingVgws": [],
+      "RouteTableId": "rtb-003c1aa4e1ccde328",
+      "Routes": [
+        {
+          "DestinationCidrBlock": "10.0.0.0/16",
+          "GatewayId": "local",
+          "Origin": "CreateRouteTable",
+          "State": "active"
+        }
+      ],
+      "Tags": [],
+      "VpcId": "vpc-04c88b22754bc0c02",
+      "OwnerId": "512285571086"
+    },
+    {
+      "Associations": [
+        {
+          "Main": false,
+          "RouteTableAssociationId": "rtbassoc-07f3e40143a1a7c09",
+          "RouteTableId": "rtb-066ef278a8f7ad78a",
+          "SubnetId": "subnet-07fb395540cf9ac7a",
+          "AssociationState": {
+            "State": "associated"
+          }
+        }
+      ],
+      "PropagatingVgws": [],
+      "RouteTableId": "rtb-066ef278a8f7ad78a",
+      "Routes": [
+        {
+          "DestinationCidrBlock": "10.0.0.0/16",
+          "GatewayId": "local",
+          "Origin": "CreateRouteTable",
+          "State": "active"
+        }
+      ],
+      "Tags": [
+        {
+          "Key": "aws:cloudformation:logical-id",
+          "Value": "OculusDevvpcOculusDevprivateisolatedSubnet2RouteTableE847642E"
+        },
+        {
+          "Key": "aws:cloudformation:stack-name",
+          "Value": "OculusDevStack"
+        },
+        {
+          "Key": "aws:cloudformation:stack-id",
+          "Value": "arn:aws:cloudformation:us-east-1:512285571086:stack/OculusDevStack/ca5bc700-82b1-11f0-824c-0e34acf8beff"
+        },
+        {
+          "Key": "project",
+          "Value": "oculus"
+        },
+        {
+          "Key": "stack",
+          "Value": "OculusDevStack"
+        },
+        {
+          "Key": "Name",
+          "Value": "OculusDevStack/OculusDev_vpc/OculusDev_private_isolatedSubnet2"
+        },
+        {
+          "Key": "environment",
+          "Value": "dev"
+        }
+      ],
+      "VpcId": "vpc-04c88b22754bc0c02",
+      "OwnerId": "512285571086"
+    },
+    {
+      "Associations": [
+        {
+          "Main": false,
+          "RouteTableAssociationId": "rtbassoc-0fde3575a4a2dcaf0",
+          "RouteTableId": "rtb-0cbf890efb092a438",
+          "SubnetId": "subnet-0152390c4549b3b99",
+          "AssociationState": {
+            "State": "associated"
+          }
+        }
+      ],
+      "PropagatingVgws": [],
+      "RouteTableId": "rtb-0cbf890efb092a438",
+      "Routes": [
+        {
+          "DestinationCidrBlock": "10.0.0.0/16",
+          "GatewayId": "local",
+          "Origin": "CreateRouteTable",
+          "State": "active"
+        }
+      ],
+      "Tags": [
+        {
+          "Key": "aws:cloudformation:stack-id",
+          "Value": "arn:aws:cloudformation:us-east-1:512285571086:stack/OculusDevStack/ca5bc700-82b1-11f0-824c-0e34acf8beff"
+        },
+        {
+          "Key": "aws:cloudformation:logical-id",
+          "Value": "OculusDevvpcOculusDevprivateisolatedSubnet3RouteTableFE9F6841"
+        },
+        {
+          "Key": "project",
+          "Value": "oculus"
+        },
+        {
+          "Key": "aws:cloudformation:stack-name",
+          "Value": "OculusDevStack"
+        },
+        {
+          "Key": "environment",
+          "Value": "dev"
+        },
+        {
+          "Key": "Name",
+          "Value": "OculusDevStack/OculusDev_vpc/OculusDev_private_isolatedSubnet3"
+        },
+        {
+          "Key": "stack",
+          "Value": "OculusDevStack"
+        }
+      ],
+      "VpcId": "vpc-04c88b22754bc0c02",
+      "OwnerId": "512285571086"
+    },
+    {
+      "Associations": [
+        {
+          "Main": false,
+          "RouteTableAssociationId": "rtbassoc-06ee920aaf97ec5f4",
+          "RouteTableId": "rtb-044b4b7300fb4d176",
+          "SubnetId": "subnet-094cd58e96312dc3d",
+          "AssociationState": {
+            "State": "associated"
+          }
+        }
+      ],
+      "PropagatingVgws": [],
+      "RouteTableId": "rtb-044b4b7300fb4d176",
+      "Routes": [
+        {
+          "DestinationCidrBlock": "10.0.0.0/16",
+          "GatewayId": "local",
+          "Origin": "CreateRouteTable",
+          "State": "active"
+        }
+      ],
+      "Tags": [
+        {
+          "Key": "environment",
+          "Value": "dev"
+        },
+        {
+          "Key": "stack",
+          "Value": "OculusDevStack"
+        },
+        {
+          "Key": "Name",
+          "Value": "OculusDevStack/OculusDev_vpc/OculusDev_dbSubnet2"
+        },
+        {
+          "Key": "aws:cloudformation:stack-name",
+          "Value": "OculusDevStack"
+        },
+        {
+          "Key": "project",
+          "Value": "oculus"
+        },
+        {
+          "Key": "aws:cloudformation:logical-id",
+          "Value": "OculusDevvpcOculusDevdbSubnet2RouteTable7FB69380"
+        },
+        {
+          "Key": "aws:cloudformation:stack-id",
+          "Value": "arn:aws:cloudformation:us-east-1:512285571086:stack/OculusDevStack/ca5bc700-82b1-11f0-824c-0e34acf8beff"
+        }
+      ],
+      "VpcId": "vpc-04c88b22754bc0c02",
+      "OwnerId": "512285571086"
+    },
+    {
+      "Associations": [
+        {
+          "Main": false,
+          "RouteTableAssociationId": "rtbassoc-00c069d7b881598cd",
+          "RouteTableId": "rtb-0ce0a28ccd185aef7",
+          "SubnetId": "subnet-08a8ebd0e873f1d0d",
+          "AssociationState": {
+            "State": "associated"
+          }
+        }
+      ],
+      "PropagatingVgws": [],
+      "RouteTableId": "rtb-0ce0a28ccd185aef7",
+      "Routes": [
+        {
+          "DestinationCidrBlock": "10.0.0.0/16",
+          "GatewayId": "local",
+          "Origin": "CreateRouteTable",
+          "State": "active"
+        },
+        {
+          "DestinationCidrBlock": "0.0.0.0/0",
+          "GatewayId": "igw-00cb7c182292985fd",
+          "Origin": "CreateRoute",
+          "State": "active"
+        }
+      ],
+      "Tags": [
+        {
+          "Key": "aws:cloudformation:stack-id",
+          "Value": "arn:aws:cloudformation:us-east-1:512285571086:stack/OculusDevStack/ca5bc700-82b1-11f0-824c-0e34acf8beff"
+        },
+        {
+          "Key": "stack",
+          "Value": "OculusDevStack"
+        },
+        {
+          "Key": "environment",
+          "Value": "dev"
+        },
+        {
+          "Key": "project",
+          "Value": "oculus"
+        },
+        {
+          "Key": "aws:cloudformation:stack-name",
+          "Value": "OculusDevStack"
+        },
+        {
+          "Key": "Name",
+          "Value": "OculusDevStack/OculusDev_vpc/OculusDev_publicSubnet3"
+        },
+        {
+          "Key": "aws:cloudformation:logical-id",
+          "Value": "OculusDevvpcOculusDevpublicSubnet3RouteTableEDBA400D"
+        }
+      ],
+      "VpcId": "vpc-04c88b22754bc0c02",
+      "OwnerId": "512285571086"
+    },
+    {
+      "Associations": [
+        {
+          "Main": false,
+          "RouteTableAssociationId": "rtbassoc-04309dffe48f5e261",
+          "RouteTableId": "rtb-056864adf57d9aa20",
+          "SubnetId": "subnet-07c6bee8cd8ea148f",
+          "AssociationState": {
+            "State": "associated"
+          }
+        }
+      ],
+      "PropagatingVgws": [],
+      "RouteTableId": "rtb-056864adf57d9aa20",
+      "Routes": [
+        {
+          "DestinationCidrBlock": "10.0.0.0/16",
+          "GatewayId": "local",
+          "Origin": "CreateRouteTable",
+          "State": "active"
+        },
+        {
+          "DestinationCidrBlock": "0.0.0.0/0",
+          "GatewayId": "igw-00cb7c182292985fd",
+          "Origin": "CreateRoute",
+          "State": "active"
+        }
+      ],
+      "Tags": [
+        {
+          "Key": "environment",
+          "Value": "dev"
+        },
+        {
+          "Key": "stack",
+          "Value": "OculusDevStack"
+        },
+        {
+          "Key": "project",
+          "Value": "oculus"
+        },
+        {
+          "Key": "aws:cloudformation:stack-id",
+          "Value": "arn:aws:cloudformation:us-east-1:512285571086:stack/OculusDevStack/ca5bc700-82b1-11f0-824c-0e34acf8beff"
+        },
+        {
+          "Key": "Name",
+          "Value": "OculusDevStack/OculusDev_vpc/OculusDev_publicSubnet2"
+        },
+        {
+          "Key": "aws:cloudformation:stack-name",
+          "Value": "OculusDevStack"
+        },
+        {
+          "Key": "aws:cloudformation:logical-id",
+          "Value": "OculusDevvpcOculusDevpublicSubnet2RouteTableD63FD85C"
+        }
+      ],
+      "VpcId": "vpc-04c88b22754bc0c02",
+      "OwnerId": "512285571086"
+    }
+  ],
+  "networkAcls": [
+    {
+      "Associations": [
+        {
+          "NetworkAclAssociationId": "aclassoc-0a955dc1e65bac249",
+          "NetworkAclId": "acl-0616f556c2160123b",
+          "SubnetId": "subnet-07c6bee8cd8ea148f"
+        },
+        {
+          "NetworkAclAssociationId": "aclassoc-0bcb049e893d3b13d",
+          "NetworkAclId": "acl-0616f556c2160123b",
+          "SubnetId": "subnet-0cfe9c490bb509306"
+        },
+        {
+          "NetworkAclAssociationId": "aclassoc-0e98fbad6020c3da6",
+          "NetworkAclId": "acl-0616f556c2160123b",
+          "SubnetId": "subnet-0c217543cfc719fd9"
+        },
+        {
+          "NetworkAclAssociationId": "aclassoc-0ec27cc99b06f594f",
+          "NetworkAclId": "acl-0616f556c2160123b",
+          "SubnetId": "subnet-0152390c4549b3b99"
+        },
+        {
+          "NetworkAclAssociationId": "aclassoc-0584307f4fbfbb1b2",
+          "NetworkAclId": "acl-0616f556c2160123b",
+          "SubnetId": "subnet-00259a34572076a41"
+        },
+        {
+          "NetworkAclAssociationId": "aclassoc-075d498026bdd8edd",
+          "NetworkAclId": "acl-0616f556c2160123b",
+          "SubnetId": "subnet-094cd58e96312dc3d"
+        },
+        {
+          "NetworkAclAssociationId": "aclassoc-0bf9f7a763cf997b7",
+          "NetworkAclId": "acl-0616f556c2160123b",
+          "SubnetId": "subnet-08a8ebd0e873f1d0d"
+        },
+        {
+          "NetworkAclAssociationId": "aclassoc-0dabc20161add97c0",
+          "NetworkAclId": "acl-0616f556c2160123b",
+          "SubnetId": "subnet-07fb395540cf9ac7a"
+        },
+        {
+          "NetworkAclAssociationId": "aclassoc-003c4e2f3275c9826",
+          "NetworkAclId": "acl-0616f556c2160123b",
+          "SubnetId": "subnet-0cd8f4afd0a3ea652"
+        }
+      ],
+      "Entries": [
+        {
+          "CidrBlock": "0.0.0.0/0",
+          "Egress": true,
+          "Protocol": "-1",
+          "RuleAction": "allow",
+          "RuleNumber": 100
+        },
+        {
+          "CidrBlock": "0.0.0.0/0",
+          "Egress": true,
+          "Protocol": "-1",
+          "RuleAction": "deny",
+          "RuleNumber": 32767
+        },
+        {
+          "CidrBlock": "0.0.0.0/0",
+          "Egress": false,
+          "Protocol": "-1",
+          "RuleAction": "allow",
+          "RuleNumber": 100
+        },
+        {
+          "CidrBlock": "0.0.0.0/0",
+          "Egress": false,
+          "Protocol": "-1",
+          "RuleAction": "deny",
+          "RuleNumber": 32767
+        }
+      ],
+      "IsDefault": true,
+      "NetworkAclId": "acl-0616f556c2160123b",
+      "Tags": [],
+      "VpcId": "vpc-04c88b22754bc0c02",
+      "OwnerId": "512285571086"
+    }
+  ],
+  "natGateways": [],
+  "ec2Instances": [],
+  "rdsInstances": [
+    {
+      "DBInstanceIdentifier": "oculusdevstack-oculusdevpg4099ade6-gnto8jcgwxyw",
+      "DBInstanceClass": "db.t3.micro",
+      "Engine": "postgres",
+      "DBInstanceStatus": "available",
+      "MasterUsername": "postgres",
+      "Endpoint": {
+        "Address": "oculusdevstack-oculusdevpg4099ade6-gnto8jcgwxyw.cmto6kcyw96u.us-east-1.rds.amazonaws.com",
+        "Port": 5432,
+        "HostedZoneId": "Z2R2ITUGPM61AM"
+      },
+      "AllocatedStorage": 20,
+      "InstanceCreateTime": "2025-08-26T19:25:12.795Z",
+      "PreferredBackupWindow": "06:52-07:22",
+      "BackupRetentionPeriod": 0,
+      "DBSecurityGroups": [],
+      "VpcSecurityGroups": [
+        {
+          "VpcSecurityGroupId": "sg-07f62aa7c636efd99",
+          "Status": "active"
+        }
+      ],
+      "DBParameterGroups": [
+        {
+          "DBParameterGroupName": "default.postgres14",
+          "ParameterApplyStatus": "in-sync"
+        }
+      ],
+      "AvailabilityZone": "us-east-1c",
+      "DBSubnetGroup": {
+        "DBSubnetGroupName": "oculusdevstack-oculusdevpgsubnetgroup-mddniepu41zz",
+        "DBSubnetGroupDescription": "Subnets for RDS",
+        "VpcId": "vpc-04c88b22754bc0c02",
+        "SubnetGroupStatus": "Complete",
+        "Subnets": [
+          {
+            "SubnetIdentifier": "subnet-0152390c4549b3b99",
+            "SubnetAvailabilityZone": {
+              "Name": "us-east-1c"
+            },
+            "SubnetOutpost": {},
+            "SubnetStatus": "Active"
+          },
+          {
+            "SubnetIdentifier": "subnet-0c217543cfc719fd9",
+            "SubnetAvailabilityZone": {
+              "Name": "us-east-1a"
+            },
+            "SubnetOutpost": {},
+            "SubnetStatus": "Active"
+          },
+          {
+            "SubnetIdentifier": "subnet-00259a34572076a41",
+            "SubnetAvailabilityZone": {
+              "Name": "us-east-1c"
+            },
+            "SubnetOutpost": {},
+            "SubnetStatus": "Active"
+          },
+          {
+            "SubnetIdentifier": "subnet-0cfe9c490bb509306",
+            "SubnetAvailabilityZone": {
+              "Name": "us-east-1a"
+            },
+            "SubnetOutpost": {},
+            "SubnetStatus": "Active"
+          },
+          {
+            "SubnetIdentifier": "subnet-094cd58e96312dc3d",
+            "SubnetAvailabilityZone": {
+              "Name": "us-east-1b"
+            },
+            "SubnetOutpost": {},
+            "SubnetStatus": "Active"
+          },
+          {
+            "SubnetIdentifier": "subnet-07fb395540cf9ac7a",
+            "SubnetAvailabilityZone": {
+              "Name": "us-east-1b"
+            },
+            "SubnetOutpost": {},
+            "SubnetStatus": "Active"
+          }
+        ],
+        "SupportedNetworkTypes": []
+      },
+      "PreferredMaintenanceWindow": "tue:05:44-tue:06:14",
+      "PendingModifiedValues": {},
+      "MultiAZ": false,
+      "EngineVersion": "14.17",
+      "AutoMinorVersionUpgrade": true,
+      "ReadReplicaDBInstanceIdentifiers": [],
+      "ReadReplicaDBClusterIdentifiers": [],
+      "LicenseModel": "postgresql-license",
+      "OptionGroupMemberships": [
+        {
+          "OptionGroupName": "default:postgres-14",
+          "Status": "in-sync"
+        }
+      ],
+      "PubliclyAccessible": false,
+      "StatusInfos": [],
+      "StorageType": "gp2",
+      "DbInstancePort": 0,
+      "StorageEncrypted": false,
+      "DbiResourceId": "db-6IT3O22DH2A3TQOD2M5VOWLIAY",
+      "CACertificateIdentifier": "rds-ca-rsa2048-g1",
+      "DomainMemberships": [],
+      "CopyTagsToSnapshot": true,
+      "MonitoringInterval": 0,
+      "DBInstanceArn": "arn:aws:rds:us-east-1:512285571086:db:oculusdevstack-oculusdevpg4099ade6-gnto8jcgwxyw",
+      "IAMDatabaseAuthenticationEnabled": false,
+      "PerformanceInsightsEnabled": false,
+      "EnabledCloudwatchLogsExports": [],
+      "ProcessorFeatures": [],
+      "DeletionProtection": false,
+      "AssociatedRoles": [],
+      "MaxAllocatedStorage": 100,
+      "TagList": [
+        {
+          "Key": "aws:cloudformation:stack-name",
+          "Value": "OculusDevStack"
+        },
+        {
+          "Key": "environment",
+          "Value": "dev"
+        },
+        {
+          "Key": "stack",
+          "Value": "OculusDevStack"
+        },
+        {
+          "Key": "aws:cloudformation:stack-id",
+          "Value": "arn:aws:cloudformation:us-east-1:512285571086:stack/OculusDevStack/ca5bc700-82b1-11f0-824c-0e34acf8beff"
+        },
+        {
+          "Key": "aws:cloudformation:logical-id",
+          "Value": "OculusDevpg4099ADE6"
+        },
+        {
+          "Key": "project",
+          "Value": "oculus"
+        },
+        {
+          "Key": "Name",
+          "Value": "OculusDev_pg_database"
+        }
+      ],
+      "DBInstanceAutomatedBackupsReplications": [],
+      "CustomerOwnedIpEnabled": false,
+      "ActivityStreamStatus": "stopped",
+      "BackupTarget": "region",
+      "NetworkType": "IPV4",
+      "StorageThroughput": 0,
+      "CertificateDetails": {
+        "CAIdentifier": "rds-ca-rsa2048-g1",
+        "ValidTill": "2026-08-26T19:23:53.000Z"
+      },
+      "DedicatedLogVolume": false,
+      "IsStorageConfigUpgradeAvailable": false,
+      "EngineLifecycleSupport": "open-source-rds-extended-support"
+    }
+  ],
+  "rdsProxies": [
+    {
+      "DBProxyName": "oculusdev-pgproxy",
+      "DBProxyArn": "arn:aws:rds:us-east-1:512285571086:db-proxy:prx-064d01c0debe56391",
+      "Status": "available",
+      "EngineFamily": "POSTGRESQL",
+      "VpcId": "vpc-04c88b22754bc0c02",
+      "VpcSecurityGroupIds": [
+        "sg-07f62aa7c636efd99"
+      ],
+      "VpcSubnetIds": [
+        "subnet-07fb395540cf9ac7a",
+        "subnet-094cd58e96312dc3d",
+        "subnet-0cfe9c490bb509306",
+        "subnet-00259a34572076a41",
+        "subnet-0c217543cfc719fd9",
+        "subnet-0152390c4549b3b99"
+      ],
+      "Auth": [
+        {
+          "AuthScheme": "SECRETS",
+          "SecretArn": "arn:aws:secretsmanager:us-east-1:512285571086:secret:OculusDev_db_secret-Dsfl6x",
+          "IAMAuth": "DISABLED",
+          "ClientPasswordAuthType": "POSTGRES_SCRAM_SHA_256"
+        }
+      ],
+      "RoleArn": "arn:aws:iam::512285571086:role/OculusDevStack-OculusDevpgproxyIAMRole31E26C6A-SdiD5r2brJLb",
+      "Endpoint": "oculusdev-pgproxy.proxy-cmto6kcyw96u.us-east-1.rds.amazonaws.com",
+      "RequireTLS": false,
+      "IdleClientTimeout": 1800,
+      "DebugLogging": false,
+      "CreatedDate": "2025-08-26T19:21:39.826Z",
+      "UpdatedDate": "2025-08-26T19:31:06.707Z"
+    }
+  ],
+  "lambdaFunctions": [
+    {
+      "FunctionName": "OculusDevStack-LogRetentionaae0aa3c5b4d4f87b02d85b-Q4QE7PFHzKFI",
+      "FunctionArn": "arn:aws:lambda:us-east-1:512285571086:function:OculusDevStack-LogRetentionaae0aa3c5b4d4f87b02d85b-Q4QE7PFHzKFI",
+      "Runtime": "nodejs22.x",
+      "Role": "arn:aws:iam::512285571086:role/OculusDevStack-LogRetentionaae0aa3c5b4d4f87b02d85b2-jcXN492ekshF",
+      "Handler": "index.handler",
+      "CodeSize": 1590,
+      "Description": "",
+      "Timeout": 900,
+      "MemorySize": 128,
+      "LastModified": "2025-08-26T19:21:49.571+0000",
+      "CodeSha256": "pGKLvOYNjMKMXsm2uFkMPuAFBE+yi4V7pWHVTZAKGfo=",
+      "Version": "$LATEST",
+      "KMSKeyArn": null,
+      "TracingConfig": {
+        "Mode": "PassThrough"
+      },
+      "MasterArn": null,
+      "RevisionId": "7f579685-a6dd-4909-9b01-fffdc8fb0f5b",
+      "State": null,
+      "StateReason": null,
+      "StateReasonCode": null,
+      "LastUpdateStatus": null,
+      "LastUpdateStatusReason": null,
+      "LastUpdateStatusReasonCode": null,
+      "PackageType": "Zip",
+      "SigningProfileVersionArn": null,
+      "SigningJobArn": null,
+      "Architectures": [
+        "x86_64"
+      ],
+      "EphemeralStorage": {
+        "Size": 512
+      },
+      "SnapStart": {
+        "ApplyOn": "None",
+        "OptimizationStatus": "Off"
+      },
+      "LoggingConfig": {
+        "LogFormat": "Text",
+        "ApplicationLogLevel": null,
+        "SystemLogLevel": null,
+        "LogGroup": "/aws/lambda/OculusDevStack-LogRetentionaae0aa3c5b4d4f87b02d85b-Q4QE7PFHzKFI"
+      }
+    },
+    {
+      "FunctionName": "OculusDevStack-CustomS3AutoDeleteObjectsCustomReso-2biWqN8Rt2OD",
+      "FunctionArn": "arn:aws:lambda:us-east-1:512285571086:function:OculusDevStack-CustomS3AutoDeleteObjectsCustomReso-2biWqN8Rt2OD",
+      "Runtime": "nodejs22.x",
+      "Role": "arn:aws:iam::512285571086:role/OculusDevStack-CustomS3AutoDeleteObjectsCustomResou-PZ320BrM3vI2",
+      "Handler": "index.handler",
+      "CodeSize": 2237,
+      "Description": "Lambda function for auto-deleting objects in oculusdevstack-oculusdevsitebucket2a92d4df-65pi37lvwnbu S3 bucket.",
+      "Timeout": 900,
+      "MemorySize": 128,
+      "LastModified": "2025-08-26T19:21:33.191+0000",
+      "CodeSha256": "CmExGfRutCJNjHF3sEx3R54UZAAtK6f8UFQLjaIRpsQ=",
+      "Version": "$LATEST",
+      "KMSKeyArn": null,
+      "TracingConfig": {
+        "Mode": "PassThrough"
+      },
+      "MasterArn": null,
+      "RevisionId": "5cba0de5-d47c-4d14-a4ad-e7369eb6de35",
+      "State": null,
+      "StateReason": null,
+      "StateReasonCode": null,
+      "LastUpdateStatus": null,
+      "LastUpdateStatusReason": null,
+      "LastUpdateStatusReasonCode": null,
+      "PackageType": "Zip",
+      "SigningProfileVersionArn": null,
+      "SigningJobArn": null,
+      "Architectures": [
+        "x86_64"
+      ],
+      "EphemeralStorage": {
+        "Size": 512
+      },
+      "SnapStart": {
+        "ApplyOn": "None",
+        "OptimizationStatus": "Off"
+      },
+      "LoggingConfig": {
+        "LogFormat": "Text",
+        "ApplicationLogLevel": null,
+        "SystemLogLevel": null,
+        "LogGroup": "/aws/lambda/OculusDevStack-CustomS3AutoDeleteObjectsCustomReso-2biWqN8Rt2OD"
+      }
+    },
+    {
+      "FunctionName": "OculusDevStack-OculusDevapifn3A1749D5-Ha3iofmf5thZ",
+      "FunctionArn": "arn:aws:lambda:us-east-1:512285571086:function:OculusDevStack-OculusDevapifn3A1749D5-Ha3iofmf5thZ",
+      "Runtime": "nodejs18.x",
+      "Role": "arn:aws:iam::512285571086:role/OculusDevStack-OculusDevapifnServiceRole63E850B4-N4lTpeeKtBV3",
+      "Handler": "index.handler",
+      "CodeSize": 44052,
+      "Description": "Oculus API",
+      "Timeout": 30,
+      "MemorySize": 256,
+      "LastModified": "2025-08-26T19:25:37.350+0000",
+      "CodeSha256": "hck9JIgRpZgjgO7oRnVS79ferkdkj8WhX6uBYLC6/G4=",
+      "Version": "$LATEST",
+      "VpcConfig": {
+        "SubnetIds": [
+          "subnet-0cfe9c490bb509306",
+          "subnet-0c217543cfc719fd9",
+          "subnet-07fb395540cf9ac7a",
+          "subnet-094cd58e96312dc3d",
+          "subnet-00259a34572076a41",
+          "subnet-0152390c4549b3b99"
+        ],
+        "SecurityGroupIds": [
+          "sg-07048b84f920fb9a8"
+        ],
+        "VpcId": "vpc-04c88b22754bc0c02",
+        "Ipv6AllowedForDualStack": false
+      },
+      "Environment": {
+        "Variables": {
+          "PGHOST": "oculusdev-pgproxy.proxy-cmto6kcyw96u.us-east-1.rds.amazonaws.com",
+          "PGPORT": "5432",
+          "DB_SECRET_ARN": "arn:aws:secretsmanager:us-east-1:512285571086:secret:OculusDev_db_secret-Dsfl6x",
+          "PGDATABASE": "postgres"
+        }
+      },
+      "KMSKeyArn": null,
+      "TracingConfig": {
+        "Mode": "PassThrough"
+      },
+      "MasterArn": null,
+      "RevisionId": "c180ecf0-76d9-47a4-b8e5-8a1f3e9067b4",
+      "State": null,
+      "StateReason": null,
+      "StateReasonCode": null,
+      "LastUpdateStatus": null,
+      "LastUpdateStatusReason": null,
+      "LastUpdateStatusReasonCode": null,
+      "PackageType": "Zip",
+      "SigningProfileVersionArn": null,
+      "SigningJobArn": null,
+      "Architectures": [
+        "x86_64"
+      ],
+      "EphemeralStorage": {
+        "Size": 512
+      },
+      "SnapStart": {
+        "ApplyOn": "None",
+        "OptimizationStatus": "Off"
+      },
+      "LoggingConfig": {
+        "LogFormat": "Text",
+        "ApplicationLogLevel": null,
+        "SystemLogLevel": null,
+        "LogGroup": "/aws/lambda/OculusDevStack-OculusDevapifn3A1749D5-Ha3iofmf5thZ"
+      }
+    },
+    {
+      "FunctionName": "OculusDevStack-CustomCDKBucketDeployment8693BB6496-op7c5Fp2acXw",
+      "FunctionArn": "arn:aws:lambda:us-east-1:512285571086:function:OculusDevStack-CustomCDKBucketDeployment8693BB6496-op7c5Fp2acXw",
+      "Runtime": "python3.11",
+      "Role": "arn:aws:iam::512285571086:role/OculusDevStack-CustomCDKBucketDeployment8693BB64968-QHGgjnD7ooO1",
+      "Handler": "index.handler",
+      "CodeSize": 5471,
+      "Description": "",
+      "Timeout": 900,
+      "MemorySize": 128,
+      "LastModified": "2025-08-26T19:21:50.454+0000",
+      "CodeSha256": "5wn+vLqwDFGN16yjWQfV7EDpgKDRWqsLGrL2TDX7wLM=",
+      "Version": "$LATEST",
+      "Environment": {
+        "Variables": {
+          "AWS_CA_BUNDLE": "/etc/pki/ca-trust/extracted/pem/tls-ca-bundle.pem"
+        }
+      },
+      "KMSKeyArn": null,
+      "TracingConfig": {
+        "Mode": "PassThrough"
+      },
+      "MasterArn": null,
+      "RevisionId": "dfc3dde6-f68d-427e-af3d-75c62f80f92e",
+      "Layers": [
+        {
+          "Arn": "arn:aws:lambda:us-east-1:512285571086:layer:OculusDevsitedeployAwsCliLayerA722435B:3",
+          "CodeSize": 20070226,
+          "SigningProfileVersionArn": null,
+          "SigningJobArn": null
+        }
+      ],
+      "State": null,
+      "StateReason": null,
+      "StateReasonCode": null,
+      "LastUpdateStatus": null,
+      "LastUpdateStatusReason": null,
+      "LastUpdateStatusReasonCode": null,
+      "PackageType": "Zip",
+      "SigningProfileVersionArn": null,
+      "SigningJobArn": null,
+      "Architectures": [
+        "x86_64"
+      ],
+      "EphemeralStorage": {
+        "Size": 512
+      },
+      "SnapStart": {
+        "ApplyOn": "None",
+        "OptimizationStatus": "Off"
+      },
+      "LoggingConfig": {
+        "LogFormat": "Text",
+        "ApplicationLogLevel": null,
+        "SystemLogLevel": null,
+        "LogGroup": "/aws/lambda/OculusDevStack-CustomCDKBucketDeployment8693BB6496-op7c5Fp2acXw"
+      }
+    }
+  ],
+  "apiGateways": [
+    {
+      "id": "gkvybwktj6",
+      "name": "OculusDev_api",
+      "createdDate": "2025-08-26T19:21:13.000Z",
+      "apiKeySource": "HEADER",
+      "endpointConfiguration": {
+        "types": [
+          "EDGE"
+        ]
+      },
+      "tags": {
+        "Name": "OculusDev_api_gateway",
+        "aws:cloudformation:logical-id": "OculusDevapi33EF9754",
+        "aws:cloudformation:stack-id": "arn:aws:cloudformation:us-east-1:512285571086:stack/OculusDevStack/ca5bc700-82b1-11f0-824c-0e34acf8beff",
+        "aws:cloudformation:stack-name": "OculusDevStack",
+        "environment": "dev",
+        "project": "oculus",
+        "stack": "OculusDevStack"
+      },
+      "disableExecuteApiEndpoint": false,
+      "rootResourceId": "s1pe21fchg",
+      "hasProdDeployment": true,
+      "prodStageName": "prod"
+    }
+  ],
   "secrets": [
     {
-      "ARN": "arn:aws:secretsmanager:us-east-1:512285571086:secret:security-survey-db-secret-w1So0s",
-      "Name": "security-survey-db-secret",
-      "Description": "Database credentials for security survey application",
-      "LastChangedDate": "2025-05-14T20:56:32.502Z",
-      "Tags": [],
+      "ARN": "arn:aws:secretsmanager:us-east-1:512285571086:secret:OculusDev_db_secret-Dsfl6x",
+      "Name": "OculusDev_db_secret",
+      "LastChangedDate": "2025-08-26T19:26:50.576Z",
+      "LastAccessedDate": "2025-08-26T00:00:00.000Z",
+      "Tags": [
+        {
+          "Key": "aws:cloudformation:stack-name",
+          "Value": "OculusDevStack"
+        },
+        {
+          "Key": "stack",
+          "Value": "OculusDevStack"
+        },
+        {
+          "Key": "environment",
+          "Value": "dev"
+        },
+        {
+          "Key": "aws:cloudformation:stack-id",
+          "Value": "arn:aws:cloudformation:us-east-1:512285571086:stack/OculusDevStack/ca5bc700-82b1-11f0-824c-0e34acf8beff"
+        },
+        {
+          "Key": "aws:cloudformation:logical-id",
+          "Value": "OculusDevdbsecretB7E3D8E3"
+        },
+        {
+          "Key": "project",
+          "Value": "oculus"
+        },
+        {
+          "Key": "Name",
+          "Value": "OculusDev_db_secret"
+        }
+      ],
       "SecretVersionsToStages": {
-        "c3c6c8b6-388e-46ab-9c71-734280a7d3dd": [
+        "b13e1e2e-2b03-e3e9-926b-0c082bb1a8f1": [
+          "AWSPREVIOUS"
+        ],
+        "ed9d92d1-e5f9-47f9-97a9-64ea881c9e6c": [
           "AWSCURRENT"
         ]
       },
-      "CreatedDate": "2025-05-14T20:56:32.292Z"
+      "CreatedDate": "2025-08-26T19:21:13.555Z"
     }
   ],
   "s3Buckets": [
     {
-      "Name": "oculusministack-oculussitebucketdebfbe1e-q4uwii1y2qua",
-      "CreationDate": "2025-08-23T19:52:18.000Z"
+      "Name": "oculusdevstack-oculusdevsitebucket2a92d4df-65pi37lvwnbu",
+      "CreationDate": "2025-08-26T19:21:16.000Z"
     }
   ],
   "cloudFrontDistributions": [
     {
-      "Id": "E2DEVCKFTV0Y1P",
-      "ARN": "arn:aws:cloudfront::512285571086:distribution/E2DEVCKFTV0Y1P",
+      "Id": "E28ZPVO1T0A117",
+      "ARN": "arn:aws:cloudfront::512285571086:distribution/E28ZPVO1T0A117",
       "Status": "Deployed",
-      "LastModifiedTime": "2025-08-23T19:52:32.134Z",
-      "DomainName": "d2igt02cacwstq.cloudfront.net",
+      "LastModifiedTime": "2025-08-26T19:21:29.918Z",
+      "DomainName": "d1hsa6nbfa6rl5.cloudfront.net",
       "Aliases": {
         "Quantity": 0,
         "Items": []
@@ -123,15 +1740,15 @@
         "Quantity": 1,
         "Items": [
           {
-            "Id": "OculusMiniStackoculuscfdistOrigin1F457D469",
-            "DomainName": "oculusministack-oculussitebucketdebfbe1e-q4uwii1y2qua.s3.us-east-1.amazonaws.com",
+            "Id": "OculusDevStackOculusDevcfdistOrigin173643367",
+            "DomainName": "oculusdevstack-oculusdevsitebucket2a92d4df-65pi37lvwnbu.s3.us-east-1.amazonaws.com",
             "OriginPath": "",
             "CustomHeaders": {
               "Quantity": 0,
               "Items": []
             },
             "S3OriginConfig": {
-              "OriginAccessIdentity": "origin-access-identity/cloudfront/E4W96W7IDFM7U"
+              "OriginAccessIdentity": "origin-access-identity/cloudfront/E1BJKOK9VF22Y6"
             },
             "ConnectionAttempts": 3,
             "ConnectionTimeout": 10,
@@ -147,7 +1764,7 @@
         "Items": []
       },
       "DefaultCacheBehavior": {
-        "TargetOriginId": "OculusMiniStackoculuscfdistOrigin1F457D469",
+        "TargetOriginId": "OculusDevStackOculusDevcfdistOrigin173643367",
         "TrustedSigners": {
           "Enabled": false,
           "Quantity": 0,

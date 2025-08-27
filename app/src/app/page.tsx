@@ -1,6 +1,33 @@
 'use client';
 
 import { useState, useEffect } from 'react';
+import {
+  Box,
+  Container,
+  VStack,
+  HStack,
+  Text,
+  Heading,
+  Button,
+  Checkbox,
+  Badge,
+  Card,
+  CardBody,
+  CardHeader,
+  CardFooter,
+  Spinner,
+  Alert,
+  AlertIcon,
+  AlertTitle,
+  AlertDescription,
+  useToast,
+  Flex,
+  Icon,
+  Progress,
+  Divider,
+  IconButton,
+  Tooltip,
+} from '@chakra-ui/react';
 
 interface SurveyQuestion {
   question_id: number;
@@ -27,6 +54,8 @@ export default function SurveyPage() {
   const [selectedAnswers, setSelectedAnswers] = useState<number[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const toast = useToast();
 
   useEffect(() => {
     fetchSurveyData();
@@ -35,7 +64,7 @@ export default function SurveyPage() {
   const fetchSurveyData = async () => {
     try {
       setLoading(true);
-      // This will be your API Gateway endpoint
+      setError(null);
       const response = await fetch('/api/survey-question');
       if (!response.ok) {
         throw new Error('Failed to fetch survey data');
@@ -51,26 +80,23 @@ export default function SurveyPage() {
 
   const handleAnswerChange = (answerId: number, isChecked: boolean) => {
     if (surveyData?.question && surveyData.question.sub_category === 'Asset Management') {
-      // For checkbox questions (Asset Management)
       if (isChecked) {
         setSelectedAnswers(prev => [...prev, answerId]);
       } else {
         setSelectedAnswers(prev => prev.filter(id => id !== answerId));
       }
     } else {
-      // For radio button questions
       setSelectedAnswers([answerId]);
     }
   };
 
   const handleSubmit = async () => {
     if (selectedAnswers.length === 0) {
-      alert('Please select at least one answer');
       return;
     }
 
     try {
-      // This will be your submit endpoint
+      setIsSubmitting(true);
       const response = await fetch('/api/submit-answer', {
         method: 'POST',
         headers: {
@@ -83,127 +109,243 @@ export default function SurveyPage() {
       });
 
       if (response.ok) {
-        alert('Answer submitted successfully!');
+        toast({
+          title: 'Assessment Submitted!',
+          description: 'Your security assessment has been successfully recorded.',
+          status: 'success',
+          duration: 5000,
+          isClosable: true,
+          position: 'top-right',
+        });
         setSelectedAnswers([]);
       } else {
         throw new Error('Failed to submit answer');
       }
     } catch (err) {
-      alert('Error submitting answer: ' + (err instanceof Error ? err.message : 'Unknown error'));
+      toast({
+        title: 'Submission Failed',
+        description: 'Error submitting answer: ' + (err instanceof Error ? err.message : 'Unknown error'),
+        status: 'error',
+        duration: 5000,
+        isClosable: true,
+        position: 'top-right',
+      });
+    } finally {
+      setIsSubmitting(false);
     }
   };
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-gray-50 flex items-center justify-center">
-        <div className="text-center">
-          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 mx-auto"></div>
-          <p className="mt-4 text-gray-600">Loading survey...</p>
-        </div>
-      </div>
+      <Box minH="100vh" bg="blue.50" display="flex" alignItems="center" justifyContent="center">
+        <VStack spacing={6}>
+          <Spinner
+            thickness="4px"
+            speed="0.65s"
+            emptyColor="blue.200"
+            color="blue.500"
+            size="xl"
+          />
+          <VStack spacing={2}>
+            <Heading size="lg" color="gray.700">
+              Loading Security Assessment
+            </Heading>
+            <Text color="gray.500">
+              Preparing your cybersecurity evaluation...
+            </Text>
+          </VStack>
+        </VStack>
+      </Box>
     );
   }
 
   if (error) {
     return (
-      <div className="min-h-screen bg-gray-50 flex items-center justify-center">
-        <div className="text-center">
-          <div className="text-red-600 text-6xl mb-4">⚠️</div>
-          <h2 className="text-2xl font-bold text-gray-800 mb-2">Error Loading Survey</h2>
-          <p className="text-gray-600 mb-4">{error}</p>
-          <button 
-            onClick={fetchSurveyData}
-            className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700"
-          >
-            Try Again
-          </button>
-        </div>
-      </div>
+      <Box minH="100vh" bg="blue.50" display="flex" alignItems="center" justifyContent="center" p={4}>
+        <Card maxW="md" textAlign="center">
+          <CardBody>
+            <VStack spacing={6}>
+              <Box
+                w="20"
+                h="20"
+                bg="red.100"
+                borderRadius="full"
+                display="flex"
+                alignItems="center"
+                justifyContent="center"
+              >
+                <Text fontSize="4xl">⚠️</Text>
+              </Box>
+              <VStack spacing={3}>
+                <Heading size="lg" color="gray.800">
+                  Unable to Load Assessment
+                </Heading>
+                <Text color="gray.600">{error}</Text>
+              </VStack>
+              <Button colorScheme="blue" onClick={fetchSurveyData}>
+                Try Again
+              </Button>
+            </VStack>
+          </CardBody>
+        </Card>
+      </Box>
     );
   }
 
   if (!surveyData) {
     return (
-      <div className="min-h-screen bg-gray-50 flex items-center justify-center">
-        <div className="text-center">
-          <p className="text-gray-600">No survey data available</p>
-        </div>
-      </div>
+      <Box minH="100vh" bg="blue.50" display="flex" alignItems="center" justifyContent="center">
+        <Text color="gray.600">No survey data available</Text>
+      </Box>
     );
   }
 
   return (
-    <div className="min-h-screen bg-gray-50 py-8">
-      <div className="max-w-4xl mx-auto px-4">
+    <Box minH="100vh" bg="blue.50" py={8} px={4}>
+      <Container maxW="4xl">
         {/* Header */}
-        <div className="text-center mb-8">
-          <h1 className="text-3xl font-bold text-gray-900 mb-2">NIST CSF Security Assessment</h1>
-          <p className="text-gray-600">Evaluate your organization's cybersecurity posture</p>
-        </div>
+        <VStack spacing={8} mb={12} textAlign="center">
+          <Box
+            w="16"
+            h="16"
+            bg="blue.500"
+            borderRadius="2xl"
+            display="flex"
+            alignItems="center"
+            justifyContent="center"
+            boxShadow="xl"
+          >
+            <Text fontSize="2xl" color="white">🛡️</Text>
+          </Box>
+          <VStack spacing={4}>
+            <Heading size="2xl" color="gray.900">
+              NIST CSF Security Assessment
+            </Heading>
+            <Text fontSize="xl" color="gray.600" maxW="2xl">
+              Evaluate your organization's cybersecurity posture with our comprehensive framework assessment
+            </Text>
+          </VStack>
+        </VStack>
 
         {/* Survey Card */}
-        <div className="bg-white rounded-lg shadow-lg p-8">
-          {/* Question Header */}
-          <div className="mb-6">
-            <div className="flex items-center gap-2 mb-3">
-              <span className="bg-blue-100 text-blue-800 text-xs font-medium px-2.5 py-0.5 rounded">
-                {surveyData.question.category}
-              </span>
-              <span className="bg-gray-100 text-gray-800 text-xs font-medium px-2.5 py-0.5 rounded">
-                {surveyData.question.sub_category}
-              </span>
-            </div>
-            <h2 className="text-xl font-semibold text-gray-900 mb-2">
-              {surveyData.question.question}
-            </h2>
-            {surveyData.question.question_tool_tip && (
-              <p className="text-sm text-gray-600 italic">
-                💡 {surveyData.question.question_tool_tip}
-              </p>
-            )}
-          </div>
+        <Card shadow="xl" borderRadius="2xl" border="1px" borderColor="gray.100">
+          <CardHeader pb={6}>
+            <VStack spacing={4} align="stretch">
+              <HStack spacing={3} flexWrap="wrap">
+                <Badge colorScheme="blue" variant="subtle" px={3} py={1} borderRadius="full">
+                  {surveyData.question.category}
+                </Badge>
+                <Badge colorScheme="gray" variant="subtle" px={3} py={1} borderRadius="full">
+                  {surveyData.question.sub_category}
+                </Badge>
+              </HStack>
+              <Heading size="lg" color="gray.900" lineHeight="tall">
+                {surveyData.question.question}
+              </Heading>
+              {surveyData.question.question_tool_tip && (
+                <Alert status="info" borderRadius="lg" borderLeft="4px" borderColor="blue.400">
+                  <AlertIcon />
+                  <Box>
+                    <AlertTitle>Helpful Tip</AlertTitle>
+                    <AlertDescription>
+                      {surveyData.question.question_tool_tip}
+                    </AlertDescription>
+                  </Box>
+                </Alert>
+              )}
+            </VStack>
+          </CardHeader>
 
-          {/* Answer Options */}
-          <div className="space-y-3 mb-8">
-            {surveyData.answers.map((answer) => (
-              <label key={answer.answer_id} className="flex items-start space-x-3 cursor-pointer">
-                <input
-                  type={surveyData.question.sub_category === 'Asset Management' ? 'checkbox' : 'radio'}
-                  name="answer"
-                  value={answer.answer_id}
-                  checked={selectedAnswers.includes(answer.answer_id)}
-                  onChange={(e) => handleAnswerChange(answer.answer_id, e.target.checked)}
-                  className="mt-1 h-4 w-4 text-blue-600 border-gray-300 focus:ring-blue-500"
-                />
-                <span className="text-gray-700">{answer.answer}</span>
-              </label>
-            ))}
-          </div>
+          <CardBody pt={0}>
+            <VStack spacing={4} align="stretch" mb={8}>
+              {surveyData.answers.map((answer) => (
+                <Box
+                  key={answer.answer_id}
+                  p={4}
+                  borderRadius="xl"
+                  border="2px"
+                  borderColor={selectedAnswers.includes(answer.answer_id) ? "blue.500" : "gray.200"}
+                  bg={selectedAnswers.includes(answer.answer_id) ? "blue.50" : "white"}
+                  _hover={{
+                    borderColor: "blue.300",
+                    shadow: "md",
+                  }}
+                  transition="all 0.2s"
+                  cursor="pointer"
+                  onClick={() => handleAnswerChange(answer.answer_id, !selectedAnswers.includes(answer.answer_id))}
+                >
+                  <HStack spacing={4} align="flex-start">
+                    <Checkbox
+                      isChecked={selectedAnswers.includes(answer.answer_id)}
+                      onChange={(e) => handleAnswerChange(answer.answer_id, e.target.checked)}
+                      colorScheme="blue"
+                      size="lg"
+                    />
+                    <Text fontSize="lg" fontWeight="medium" color="gray.900" flex={1}>
+                      {answer.answer}
+                    </Text>
+                    <Box
+                      w={6}
+                      h={6}
+                      borderRadius="full"
+                      border="2px"
+                      borderColor={selectedAnswers.includes(answer.answer_id) ? "blue.500" : "gray.300"}
+                      bg={selectedAnswers.includes(answer.answer_id) ? "blue.500" : "transparent"}
+                      display="flex"
+                      alignItems="center"
+                      justifyContent="center"
+                      transition="all 0.2s"
+                    >
+                      {selectedAnswers.includes(answer.answer_id) && (
+                        <Text color="white" fontSize="sm">✓</Text>
+                      )}
+                    </Box>
+                  </HStack>
+                </Box>
+              ))}
+            </VStack>
+          </CardBody>
 
-          {/* Submit Button */}
-          <div className="text-center">
-            <button
-              onClick={handleSubmit}
-              disabled={selectedAnswers.length === 0}
-              className="bg-blue-600 text-white px-8 py-3 rounded-lg font-medium hover:bg-blue-700 disabled:bg-gray-400 disabled:cursor-not-allowed transition-colors"
-            >
-              Submit Answer
-            </button>
-          </div>
+          <CardFooter pt={0}>
+            <VStack spacing={6} w="full">
+              <Button
+                colorScheme="blue"
+                size="lg"
+                px={8}
+                py={6}
+                borderRadius="xl"
+                fontSize="lg"
+                fontWeight="semibold"
+                onClick={handleSubmit}
+                disabled={selectedAnswers.length === 0 || isSubmitting}
+                isLoading={isSubmitting}
+                loadingText="Submitting..."
+                w="full"
+                maxW="md"
+              >
+                Submit Assessment
+              </Button>
 
-          {/* Progress Indicator */}
-          <div className="mt-6 text-center">
-            <p className="text-sm text-gray-500">
-              Question 1 of 1 • {selectedAnswers.length} answer(s) selected
-            </p>
-          </div>
-        </div>
+              {/* Progress Indicator */}
+              <HStack spacing={3} bg="gray.100" px={4} py={2} borderRadius="full">
+                <Box w={2} h={2} bg="blue.500" borderRadius="full" />
+                <Text fontSize="sm" fontWeight="medium" color="gray.700">
+                  Question 1 of 1 • {selectedAnswers.length} answer(s) selected
+                </Text>
+              </HStack>
+            </VStack>
+          </CardFooter>
+        </Card>
 
         {/* Footer */}
-        <div className="text-center mt-8 text-sm text-gray-500">
-          <p>Powered by NIST Cybersecurity Framework</p>
-        </div>
-      </div>
-    </div>
+        <VStack spacing={4} mt={12} textAlign="center">
+          <Divider />
+          <HStack spacing={2} color="gray.500">
+            <Text>🔒</Text>
+            <Text fontSize="sm">Powered by NIST Cybersecurity Framework</Text>
+          </HStack>
+        </VStack>
+      </Container>
+    </Box>
   );
 }

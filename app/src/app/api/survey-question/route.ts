@@ -2,15 +2,8 @@ import { NextRequest, NextResponse } from 'next/server';
 
 export async function GET(request: NextRequest) {
   try {
-    // Get API Gateway URL from environment variable
-    const apiGatewayUrl = process.env.API_GATEWAY_URL;
-    
-    if (!apiGatewayUrl) {
-      return NextResponse.json(
-        { error: 'API Gateway URL not configured' },
-        { status: 500 }
-      );
-    }
+    // Use the correct API Gateway URL directly
+    const apiGatewayUrl = 'https://gkvybwktj6.execute-api.us-east-1.amazonaws.com/prod';
 
     // Fetch survey data from your Lambda function
     const response = await fetch(`${apiGatewayUrl}/survey/nist-csf`, {
@@ -26,7 +19,31 @@ export async function GET(request: NextRequest) {
 
     const data = await response.json();
     
-    return NextResponse.json(data);
+    // Transform the data to match the expected structure
+    if (data.questions && data.questions.length > 0) {
+      const firstQuestion = data.questions[0];
+      
+      // Transform the question data to match the expected interface
+      const transformedData = {
+        question: {
+          question_id: firstQuestion.id,
+          category: firstQuestion.category,
+          sub_category: firstQuestion.category, // Using category as sub_category for now
+          question: firstQuestion.question,
+          question_tool_tip: '', // Add tooltip if available in your Lambda response
+        },
+        answers: firstQuestion.options.map((option: string, index: number) => ({
+          answer_id: index + 1,
+          answer_type: 'radiobutton' as const,
+          answer: option,
+          answer_order: index + 1,
+        }))
+      };
+      
+      return NextResponse.json(transformedData);
+    } else {
+      throw new Error('No questions available');
+    }
   } catch (error) {
     console.error('Error fetching survey data:', error);
     return NextResponse.json(

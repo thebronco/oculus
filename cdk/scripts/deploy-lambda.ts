@@ -70,7 +70,9 @@ async function main() {
     const oculusFunction = functions.Functions?.find(fn => 
       fn.FunctionName?.includes('oculus_api_fn') ||
       fn.FunctionName?.includes('oculus-api') ||
-      fn.FunctionName?.includes('oculus_api')
+      fn.FunctionName?.includes('oculus_api') ||
+      fn.FunctionName?.includes('OculusDevapifn') ||  // CDK generated name
+      fn.FunctionName?.includes('OculusDev_api')      // Alternative naming
     );
     
     if (!oculusFunction) {
@@ -100,9 +102,14 @@ async function main() {
       name: "oculus-lambda",
       version: "1.0.0",
       main: "index.js",
-      dependencies: {},
+      dependencies: {
+        "@aws-sdk/client-secrets-manager": "^3.0.0",
+        "pg": "^8.16.3"
+      },
       devDependencies: {
-        "@types/node": "^18.0.0"
+        "@types/node": "^18.0.0",
+        "@types/pg": "^8.10.0",
+        "@types/aws-lambda": "^8.10.0"
       }
     };
     

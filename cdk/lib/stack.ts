@@ -55,59 +55,102 @@ import * as origins from "aws-cdk-lib/aws-cloudfront-origins";
 import { Tags, Duration, CfnOutput, RemovalPolicy } from "aws-cdk-lib";
 import * as path from "path";
 
-export class OculusMiniStack extends cdk.Stack {
+export class OculusDevStack extends cdk.Stack {
   constructor(scope: Construct, id: string, props?: cdk.StackProps) {
     super(scope, id, props);
 
     // Add project tag to the entire stack
     Tags.of(this).add("project", "oculus");
+    Tags.of(this).add("environment", "dev");
+    Tags.of(this).add("stack", "OculusDevStack");
 
-    // ===== VPC: reuse if provided via context =====
-    const ctxVpcId = this.node.tryGetContext("oculusVpcId") as string | undefined;
+    // ===== VPC: Dynamic strategy based on CDK context =====
+    const vpcStrategy = this.node.tryGetContext("vpcStrategy") as 'new' | 'existing';
+    const existingVpcId = this.node.tryGetContext("existingVpcId") as string | undefined;
 
     let vpc: ec2.IVpc;
-    if (ctxVpcId) {
+    if (vpcStrategy === 'existing' && existingVpcId) {
       // Reuse existing VPC -> NO CIDR ops, no subnet changes.
-      vpc = ec2.Vpc.fromLookup(this, "oculus_vpc", { vpcId: ctxVpcId });
+      console.log(`Reusing existing VPC: ${existingVpcId}`);
+      vpc = ec2.Vpc.fromLookup(this, "OculusDev_vpc", { vpcId: existingVpcId });
     } else {
-             // First-time path: create VPC (same shape as your last deploy)
-       vpc = new ec2.Vpc(this, "oculus_vpc", {
-         vpcName: "oculus_vpc",
-         ipAddresses: ec2.IpAddresses.cidr("10.0.0.0/16"),
-         maxAzs: 3,
-         natGateways: 0, // No NAT Gateway needed since no bastion host
-         subnetConfiguration: [
-           { name: "oculus_public", subnetType: ec2.SubnetType.PUBLIC, cidrMask: 20 },
-           { name: "oculus_private_isolated", subnetType: ec2.SubnetType.PRIVATE_ISOLATED, cidrMask: 20 },
-           { name: "oculus_db", subnetType: ec2.SubnetType.PRIVATE_ISOLATED, cidrMask: 20 },
-         ],
-       });
+      // Create new VPC (same shape as your last deploy)
+      console.log("Creating new VPC with all subnets");
+      vpc = new ec2.Vpc(this, "OculusDev_vpc", {
+        vpcName: "OculusDev_vpc",
+        ipAddresses: ec2.IpAddresses.cidr("10.0.0.0/16"),
+        maxAzs: 3,
+        natGateways: 0, // No NAT Gateway needed since no bastion host
+        subnetConfiguration: [
+          { name: "OculusDev_public", subnetType: ec2.SubnetType.PUBLIC, cidrMask: 20 },
+          { name: "OculusDev_private_isolated", subnetType: ec2.SubnetType.PRIVATE_ISOLATED, cidrMask: 20 },
+          { name: "OculusDev_db", subnetType: ec2.SubnetType.PRIVATE_ISOLATED, cidrMask: 20 },
+        ],
+      });
       
       // Tag VPC and all its subnets with 'oculus'
       Tags.of(vpc).add("project", "oculus");
-      Tags.of(vpc).add("Name", "oculus_vpc");
+      Tags.of(vpc).add("Name", "OculusDev_vpc");
+      Tags.of(vpc).add("environment", "dev");
     }
 
-    const lambdaSg = new ec2.SecurityGroup(this, "oculus_lambda_sg", {
+    // ===== SECURITY GROUPS: Properly separated architecture =====
+    // 
+    // SECURITY GROUP HIERARCHY:
+    // ┌─────────────────┐    ┌─────────────────┐    ┌─────────────────┐
+    // │   LAMBDA       │    │   RDS PROXY    │    │   RDS INSTANCE │
+    // │   sg-lambda    │───▶│   sg-proxy     │───▶│   sg-instance   │
+    // │   (outbound)   │    │   (in/out)     │    │   (inbound only)│
+    // └─────────────────┘    └─────────────────┘    └─────────────────┘
+    // 
+    // RULES:
+    // 1. Lambda → RDS Proxy: Port 5432 (PostgreSQL)
+    // 2. RDS Proxy → RDS Instance: Port 5432 (PostgreSQL)
+    // 3. RDS Instance: NO outbound access (secure by default)
+    // 4. RDS Proxy: Can reach anywhere (needed for DB connections)
+    // 5. Lambda: Can reach anywhere (needed for AWS services)
+    //
+    // NAMING CONVENTION:
+    // - oculusdev-lambda-sg: For Lambda functions
+    // - oculusdev-dbproxy-sg: For RDS Proxy
+    // - oculusdev-dbinstance-sg: For RDS Instance
+    //
+    const lambdaSg = new ec2.SecurityGroup(this, "OculusDev_lambda_sg", {
       vpc,
-      description: "Lambda SG",
+      securityGroupName: "oculusdev-lambda-sg",
+      description: "Security group for Lambda functions to access RDS proxy",
       allowAllOutbound: true,
     });
     Tags.of(lambdaSg).add("project", "oculus");
-    Tags.of(lambdaSg).add("Name", "oculus_lambda_sg");
+    Tags.of(lambdaSg).add("Name", "oculusdev-lambda-sg");
+    Tags.of(lambdaSg).add("environment", "dev");
 
-    const dbSg = new ec2.SecurityGroup(this, "oculus_db_sg", {
+    const dbInstanceSg = new ec2.SecurityGroup(this, "OculusDev_db_instance_sg", {
       vpc,
-      description: "DB SG",
-      allowAllOutbound: true,
+      securityGroupName: "oculusdev-dbinstance-sg",
+      description: "Security group for RDS PostgreSQL instance",
+      allowAllOutbound: false, // Database instances don't need outbound access
     });
-    Tags.of(dbSg).add("project", "oculus");
-    Tags.of(dbSg).add("Name", "oculus_db_sg");
+    Tags.of(dbInstanceSg).add("project", "oculus");
+    Tags.of(dbInstanceSg).add("Name", "oculusdev-dbinstance-sg");
+    Tags.of(dbInstanceSg).add("environment", "dev");
 
-    dbSg.addIngressRule(lambdaSg, ec2.Port.tcp(5432), "Lambda to DB");
+    const dbProxySg = new ec2.SecurityGroup(this, "OculusDev_db_proxy_sg", {
+      vpc,
+      securityGroupName: "oculusdev-dbproxy-sg",
+      description: "Security group for RDS Proxy",
+      allowAllOutbound: true, // Proxy needs outbound access to database
+    });
+    Tags.of(dbProxySg).add("project", "oculus");
+    Tags.of(dbProxySg).add("Name", "oculusdev-dbproxy-sg");
+    Tags.of(dbProxySg).add("environment", "dev");
 
-    const dbSecret = new secrets.Secret(this, "oculus_db_secret", {
-      secretName: "oculus_db_secret",
+    // Security group rules
+    dbInstanceSg.addIngressRule(dbProxySg, ec2.Port.tcp(5432), "RDS Proxy to RDS Instance");
+    dbProxySg.addIngressRule(lambdaSg, ec2.Port.tcp(5432), "Lambda to RDS Proxy");
+
+    const dbSecret = new secrets.Secret(this, "OculusDev_db_secret", {
+      secretName: "OculusDev_db_secret",
       generateSecretString: {
         secretStringTemplate: JSON.stringify({ username: "postgres" }),
         generateStringKey: "password",
@@ -116,26 +159,40 @@ export class OculusMiniStack extends cdk.Stack {
       removalPolicy: RemovalPolicy.DESTROY,
     });
     Tags.of(dbSecret).add("project", "oculus");
-    Tags.of(dbSecret).add("Name", "oculus_db_secret");
+    Tags.of(dbSecret).add("Name", "OculusDev_db_secret");
+    Tags.of(dbSecret).add("environment", "dev");
 
     // Select subnets by TYPE so it works for both "lookup VPC" and "new VPC"
-    const dbSubnets = vpc.selectSubnets({ subnetType: ec2.SubnetType.PRIVATE_ISOLATED });
-         const lambdaSubnets = vpc.selectSubnets({ subnetType: ec2.SubnetType.PRIVATE_ISOLATED });
+    // RDS and RDS Proxy should ONLY use dedicated database subnets, not all private isolated subnets
+    // For new VPC: use dedicated db subnets, for existing VPC: use private isolated but limit to 3 (one per AZ)
+    let dbSubnets: ec2.SubnetSelection;
+    let lambdaSubnets: ec2.SubnetSelection;
+    
+    if (vpcStrategy === 'existing') {
+      // For existing VPC, select private isolated subnets but limit to one per AZ
+      dbSubnets = { subnetType: ec2.SubnetType.PRIVATE_ISOLATED, onePerAz: true };
+      lambdaSubnets = { subnetType: ec2.SubnetType.PRIVATE_ISOLATED, onePerAz: true };
+    } else {
+      // For new VPC, use the dedicated database subnets
+      dbSubnets = { subnetType: ec2.SubnetType.PRIVATE_ISOLATED, onePerAz: true, subnetGroupName: "OculusDev_db" };
+      lambdaSubnets = { subnetType: ec2.SubnetType.PRIVATE_ISOLATED, onePerAz: true, subnetGroupName: "OculusDev_private_isolated" };
+    }
 
-    const dbSubnetGroup = new rds.SubnetGroup(this, "oculuspgSubnetGroup", {
+    const dbSubnetGroup = new rds.SubnetGroup(this, "OculusDev_pgSubnetGroup", {
       description: "Subnets for RDS",
       vpc,
       vpcSubnets: dbSubnets,
     });
     Tags.of(dbSubnetGroup).add("project", "oculus");
-    Tags.of(dbSubnetGroup).add("Name", "oculus_db_subnet_group");
+    Tags.of(dbSubnetGroup).add("Name", "OculusDev_db_subnet_group");
+    Tags.of(dbSubnetGroup).add("environment", "dev");
 
-    const db = new rds.DatabaseInstance(this, "oculus_pg", {
+    const db = new rds.DatabaseInstance(this, "OculusDev_pg", {
       engine: rds.DatabaseInstanceEngine.postgres({ version: rds.PostgresEngineVersion.VER_14 }),
       vpc,
       vpcSubnets: dbSubnets,
       instanceType: ec2.InstanceType.of(ec2.InstanceClass.T3, ec2.InstanceSize.MICRO),
-      securityGroups: [dbSg],
+      securityGroups: [dbInstanceSg],
       credentials: rds.Credentials.fromSecret(dbSecret),
       multiAz: false,
       allocatedStorage: 20,
@@ -147,21 +204,23 @@ export class OculusMiniStack extends cdk.Stack {
       publiclyAccessible: false,
     });
     Tags.of(db).add("project", "oculus");
-    Tags.of(db).add("Name", "oculus_pg_database");
+    Tags.of(db).add("Name", "OculusDev_pg_database");
+    Tags.of(db).add("environment", "dev");
 
-    const proxy = new rds.DatabaseProxy(this, "oculuspgproxy", {
+    const proxy = new rds.DatabaseProxy(this, "OculusDev-pgproxy", {
       proxyTarget: rds.ProxyTarget.fromInstance(db),
       secrets: [dbSecret],
       vpc,
-      securityGroups: [dbSg],
+      securityGroups: [dbProxySg],
       requireTLS: false,
       maxConnectionsPercent: 90,
       idleClientTimeout: Duration.minutes(30),
       iamAuth: false,
-      vpcSubnets: lambdaSubnets,
+      vpcSubnets: dbSubnets, // Use same subnets as RDS instance
     });
     Tags.of(proxy).add("project", "oculus");
-    Tags.of(proxy).add("Name", "oculus_pg_proxy");
+    Tags.of(proxy).add("Name", "OculusDev_pg_proxy");
+    Tags.of(proxy).add("environment", "dev");
 
     // ===== Lambda defaults (fix runtime) =====
     const lambdaDefaults: Partial<NodejsFunctionProps> = {
@@ -181,20 +240,21 @@ export class OculusMiniStack extends cdk.Stack {
       vpcSubnets: lambdaSubnets,
     };
 
-    const apiFn = new NodejsFunction(this, "oculus_api_fn", {
+    const apiFn = new NodejsFunction(this, "OculusDev_api_fn", {
       entry: path.join(__dirname, "..", "..", "lambdas", "api.ts"),
       handler: "handler",
       ...lambdaDefaults,
       description: "Oculus API",
     });
     Tags.of(apiFn).add("project", "oculus");
-    Tags.of(apiFn).add("Name", "oculus_api_lambda");
+    Tags.of(apiFn).add("Name", "OculusDev_api_lambda");
+    Tags.of(apiFn).add("environment", "dev");
 
     dbSecret.grantRead(apiFn);
 
     // ===== API Gateway (same resources) =====
-    const api = new apigw.RestApi(this, "oculus_api", {
-      restApiName: "oculus_api",
+    const api = new apigw.RestApi(this, "OculusDev_api", {
+      restApiName: "OculusDev_api",
       deployOptions: { stageName: "prod" },
       defaultCorsPreflightOptions: {
         allowOrigins: apigw.Cors.ALL_ORIGINS,
@@ -202,7 +262,8 @@ export class OculusMiniStack extends cdk.Stack {
       },
     });
     Tags.of(api).add("project", "oculus");
-    Tags.of(api).add("Name", "oculus_api_gateway");
+    Tags.of(api).add("Name", "OculusDev_api_gateway");
+    Tags.of(api).add("environment", "dev");
 
     const survey = api.root.addResource("survey");
     const nist = survey.addResource("nist-csf");
@@ -215,19 +276,21 @@ export class OculusMiniStack extends cdk.Stack {
     // Seed endpoint removed - now handled by local-seed-database.ts
 
     // ===== Static site (same) =====
-    const siteBucket = new s3.Bucket(this, "oculus_site_bucket", {
+    const siteBucket = new s3.Bucket(this, "OculusDev_site_bucket", {
       blockPublicAccess: s3.BlockPublicAccess.BLOCK_ALL,
       removalPolicy: RemovalPolicy.DESTROY,
       autoDeleteObjects: true,
     });
     Tags.of(siteBucket).add("project", "oculus");
-    Tags.of(siteBucket).add("Name", "oculus_site_bucket");
+    Tags.of(siteBucket).add("Name", "OculusDev_site_bucket");
+    Tags.of(siteBucket).add("environment", "dev");
 
-    const oai = new cloudfront.OriginAccessIdentity(this, "oculus_oai", {
+    const oai = new cloudfront.OriginAccessIdentity(this, "OculusDev_oai", {
       comment: "Allows CloudFront to reach the bucket",
     });
     Tags.of(oai).add("project", "oculus");
-    Tags.of(oai).add("Name", "oculus_oai");
+    Tags.of(oai).add("Name", "OculusDev_oai");
+    Tags.of(oai).add("environment", "dev");
 
     siteBucket.addToResourcePolicy(
       new iam.PolicyStatement({
@@ -237,7 +300,7 @@ export class OculusMiniStack extends cdk.Stack {
       })
     );
 
-    const dist = new cloudfront.Distribution(this, "oculus_cf_dist", {
+    const dist = new cloudfront.Distribution(this, "OculusDev_cf_dist", {
       defaultBehavior: {
         origin: new origins.S3Origin(siteBucket, { originAccessIdentity: oai }),
         viewerProtocolPolicy: cloudfront.ViewerProtocolPolicy.REDIRECT_TO_HTTPS,
@@ -249,9 +312,10 @@ export class OculusMiniStack extends cdk.Stack {
       httpVersion: cloudfront.HttpVersion.HTTP2,
     });
     Tags.of(dist).add("project", "oculus");
-    Tags.of(dist).add("Name", "oculus_cloudfront_distribution");
+    Tags.of(dist).add("environment", "dev");
+    Tags.of(dist).add("Name", "OculusDev_cloudfront_distribution");
 
-    new s3deploy.BucketDeployment(this, "oculus_site_deploy", {
+    new s3deploy.BucketDeployment(this, "OculusDev_site_deploy", {
       sources: [s3deploy.Source.asset(path.join(__dirname, "..", "..", "app", "out"))],
       destinationBucket: siteBucket,
       distribution: dist,

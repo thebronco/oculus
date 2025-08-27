@@ -103,7 +103,11 @@ MAX_REQUESTS_PER_MINUTE=1000
 ## 🗄️ Database Schema
 
 ### Required Tables
-
+CREATE TABLE survey_template (
+  survey_template_id VARCHAR PRIMARY KEY,
+  survey_template_name VARCHAR NOT NULL
+  
+);
 ```sql
 -- Questions table for survey templates
 CREATE TABLE questions_template (
